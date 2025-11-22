@@ -231,6 +231,14 @@
   </head>
 
   <body class="experience-page">
+    <!-- Dark/light mode toggle -->
+    <div class="darkmode-trigger bottom-right" data-darkmode-toggle>
+        <label class="switch">
+            <span class="sr-only">Toggle Darkmode</span>
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
     <!-- Menu modal -->
     <div id="uni-menu-modal" class="uk-modal-full uk-modal" data-uk-modal>
       <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle" data-uk-height-viewport>
@@ -245,6 +253,32 @@
           </ul>
         </div>
       </div>
+    </div>
+    <div class="wrap">
+
+      <header class="uni-studio-header uni-header uk-position-top">
+        <div class="uni-header-navbar uk-sticky-transparent" data-uk-sticky="top: 120; animation: uk-animation-slide-top;">
+          <div class="uk-container uk-container-expand">
+            <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" data-uk-navbar>
+              <div class="uk-navbar-top uk-flex-center">
+                <div class="uk-navbar-left">
+                  <div class="uk-navbar-item">
+                    <a class="uk-logo uk-navbar-item uk-h4 uk-h3@s uk-margin-remove dark:uk-text-gray-10" href="index.html">Gonzalo Cortes</a>
+                    <a class="uk-logo uk-navbar-item uk-sticky-logo dark:uk-text-gray-10" href="index.html">GC</a>
+                  </div>
+                </div>
+                <div class="uk-navbar-right uk-flex-right">
+                  <div class="uk-navbar-item">
+                    <a class="uni-menu-trigger" href="#uni-menu-modal" aria-label="Menu" data-uk-toggle></a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+    <div class="uni-divider">
+        <span></span><span></span><span></span>
     </div>
     <main class="exp-shell">
       <header class="exp-header">
@@ -462,6 +496,7 @@
         </div>
       </div>
     </footer>
+    </div>
     <!-- Main app script from the template (if needed for global behavior) -->
     <script src="assets/js/app.js" defer></script>
   </body>
