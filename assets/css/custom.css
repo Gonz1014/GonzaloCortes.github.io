@@ -1,23 +1,40 @@
 /* Add your own custom css here */
 
-/* Contact section contrast styling */
+/* Contact section: shared layout */
 .contact-section {
   padding: 120px 0;
   text-align: center;
+  background-color: #111111;       /* default: dark background */
+  color: #ffffff;                  /* default: white text */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.light-mode .contact-section {
-  background-color: #111;
-  color: #fff;
+/* Light version of contact section (white background, black text) */
+.light-mode .contact-section,
+.contact-section--light {
+  background-color: #ffffff;
+  color: #111111;
 }
 
-.dark-mode .contact-section {
-  background-color: #f4f4f4;
-  color: #111;
+/* Dark version of contact section (black background, white text) */
+.dark-mode .contact-section,
+.contact-section--dark {
+  background-color: #111111;
+  color: #ffffff;
 }
 
-/* Contact icons */
+/* Ensure all text and links inside inherit the correct color */
+.contact-section h1,
+.contact-section h2,
+.contact-section h3,
+.contact-section p,
+.contact-section a,
+.contact-section li,
+.contact-section span {
+  color: inherit;
+}
+
+/* Contact icons container */
 .contact-links {
   display: flex;
   gap: 32px;
@@ -26,11 +43,13 @@
   margin-top: 24px;
 }
 
+/* Let UIkit icons follow the section text color */
 .contact-links a span[data-uk-icon] {
   color: currentColor !important;
   opacity: 1 !important;
 }
 
+/* Hover effect for icons */
 .contact-links a:hover span[data-uk-icon] {
   opacity: 0.7 !important;
 }
