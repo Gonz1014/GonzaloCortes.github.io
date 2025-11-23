@@ -1,1 +1,36 @@
 /* Add your own custom css here */
+
+/* Contact section contrast styling */
+.contact-section {
+  padding: 120px 0;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.light-mode .contact-section {
+  background-color: #111;
+  color: #fff;
+}
+
+.dark-mode .contact-section {
+  background-color: #f4f4f4;
+  color: #111;
+}
+
+/* Contact icons */
+.contact-links {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.contact-links a span[data-uk-icon] {
+  color: currentColor !important;
+  opacity: 1 !important;
+}
+
+.contact-links a:hover span[data-uk-icon] {
+  opacity: 0.7 !important;
+}
