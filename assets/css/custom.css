@@ -114,3 +114,21 @@ body[data-theme="dark"] .uni-studio-footer {
   width: clamp(140px, 18vmin, 260px) !important;
   height: clamp(140px, 18vmin, 260px) !important;
 }
+
+
+/* ---------- SUPER-SIZED ICONS ~ H1 SCALE ---------- */
+:root {
+  /* Target size similar to the hero "Contact" heading */
+  --contact-icon-size: clamp(240px, 22vmin, 520px);
+}
+
+.uni-studio-footer .contact-links .uk-icon svg {
+  width: var(--contact-icon-size) !important;
+  height: var(--contact-icon-size) !important;
+}
+
+/* Slightly larger spacing so the big icons can breathe */
+.uni-studio-footer .contact-links {
+  gap: clamp(28px, 6vmin, 84px);
+  margin-top: clamp(12px, 3vmin, 36px);
+}
