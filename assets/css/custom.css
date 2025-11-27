@@ -1,18 +1,18 @@
 /* Add your own custom css here */
 
 /* ---------- CONTACT / FOOTER (uni-studio-footer) ---------- */
-/* Default to light mode text (black) */
+/* Light mode (footer has dark bg): force WHITE text */
 .uni-studio-footer { 
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
-/* When any dark-mode class/attr is active, flip to white text */
+/* Dark mode (footer bg is white): force BLACK text */
 html.dark .uni-studio-footer,
 body.dark .uni-studio-footer,
 .dark .uni-studio-footer,
 html[data-theme="dark"] .uni-studio-footer,
 body[data-theme="dark"] .uni-studio-footer { 
-  color: #ffffff !important;
+  color: #000000 !important;
 }
 
 /* Everything inside inherits footer color (kills template overrides) */
