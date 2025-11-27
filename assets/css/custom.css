@@ -46,10 +46,10 @@ body[data-theme="dark"] .uni-studio-footer {
 /* ---------- CONTACT LINKS ROW ---------- */
 .contact-links {
   display: flex;
-  gap: 80px;            /* much wider spacing between icons */
+  gap: 32px;            /* much wider spacing between icons */
   justify-content: center;
   align-items: center;
-  margin-top: 40px;     /* extra space under the paragraph */
+  margin-top: 24px;     /* extra space under the paragraph */
 }
 
 /* Icons keep the same color as text, with a subtle hover fade */
@@ -69,22 +69,30 @@ body[data-theme="dark"] .uni-studio-footer {
   padding: 16px;
 }
 
-/* Much bigger contact icons (responsive) */
+/* Larger contact icons without increasing stroke thickness */
 .uni-studio-footer .contact-links .uk-icon svg {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
 }
 
 @media (min-width: 1200px) {
   .uni-studio-footer .contact-links .uk-icon svg {
-    width: 108px;
-    height: 108px;
+    width: 128px;
+    height: 128px;
   }
 }
 
 @media (max-width: 640px) {
   .uni-studio-footer .contact-links .uk-icon svg {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
   }
+}
+
+/* Keep lines thin even when scaled up */
+.uni-studio-footer .contact-links .uk-icon svg * {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.1;         /* thin lines */
+  fill: none;
+  shape-rendering: geometricPrecision;
 }
