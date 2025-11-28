@@ -445,7 +445,7 @@ body[data-theme="dark"] .uni-studio-footer {
   width: 100% !important;
   height: 100% !important;
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center 20% !important;
 }
 
 /* Ensure Mastec tiles are visible on hover (inherit global animation) */
