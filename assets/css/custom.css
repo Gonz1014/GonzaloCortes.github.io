@@ -436,12 +436,12 @@ body[data-theme="dark"] .uni-studio-footer {
   width: 100% !important;
   height: 100% !important;
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center 25% !important;
 }
-/* Bottom-left tile (t4): row 3, column 1 */
+/* Bottom-left tile (t4): rows 2-3, column 1 */
 .page-experience .xp-card.xp-kimberly .xp-mosaic .t4 { 
   grid-column: 1 / 2 !important; 
-  grid-row: 3 / 4 !important; 
+  grid-row: 2 / 4 !important; 
   width: 100% !important;
   height: 100% !important;
   background-size: cover !important;
