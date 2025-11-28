@@ -307,10 +307,13 @@ body[data-theme="dark"] .uni-studio-footer {
 .page-experience .xp-mosaic{
   position: absolute !important;
   inset: 0 !important;                 /* top:0 right:0 bottom:0 left:0 */
+  /* Layout is configurable per-card via CSS variables set on the .xp-card element.
+     Defaults match the previous two-column layout. */
   display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  grid-template-rows: 1fr !important;
-  gap: 0 !important;
+  grid-template-columns: var(--xp-grid-cols, 1fr 1fr) !important;
+  grid-template-rows: var(--xp-grid-rows, 1fr) !important;
+  gap: var(--xp-grid-gap, 0) !important;
+  padding: var(--xp-grid-padding, 0) !important;
   border-radius: inherit !important;
   overflow: hidden !important;
   pointer-events: none !important;      /* don't block clicks */
@@ -409,11 +412,11 @@ body[data-theme="dark"] .uni-studio-footer {
   align-items: stretch;
   justify-items: stretch;
 }
-.page-experience .xp-card.xp-kimberly .xp-mosaic .t1 { grid-column: 1 / 2; grid-row: 1 / 2; }
-.page-experience .xp-card.xp-kimberly .xp-mosaic .t2 { grid-column: 3 / 4; grid-row: 1 / 2; }
-.page-experience .xp-card.xp-kimberly .xp-mosaic .t3 { grid-column: 2 / 3; grid-row: 2 / 3; justify-self: center; align-self: center; width: 60% !important; height: 60% !important; border-radius: 8px; }
-.page-experience .xp-card.xp-kimberly .xp-mosaic .t4 { grid-column: 1 / 2; grid-row: 3 / 4; }
-.page-experience .xp-card.xp-kimberly .xp-mosaic .t5 { grid-column: 3 / 4; grid-row: 3 / 4; }
+.page-experience .xp-card.xp-kimberly .xp-mosaic .t1 { grid-column: 1 / 2 !important; grid-row: 1 / 2 !important; }
+.page-experience .xp-card.xp-kimberly .xp-mosaic .t2 { grid-column: 3 / 4 !important; grid-row: 1 / 2 !important; }
+.page-experience .xp-card.xp-kimberly .xp-mosaic .t3 { grid-column: 2 / 3 !important; grid-row: 2 / 3 !important; justify-self: center !important; align-self: center !important; width: 60% !important; height: 60% !important; border-radius: 8px !important; }
+.page-experience .xp-card.xp-kimberly .xp-mosaic .t4 { grid-column: 1 / 2 !important; grid-row: 3 / 4 !important; }
+.page-experience .xp-card.xp-kimberly .xp-mosaic .t5 { grid-column: 3 / 4 !important; grid-row: 3 / 4 !important; }
 
 /* Ensure Kimberly tiles are visible on hover (inherit global animation) */
 .page-experience .xp-card.xp-kimberly:hover .xp-mosaic .xp-tile { opacity: 1 !important; transform: translateY(0) !important; }
