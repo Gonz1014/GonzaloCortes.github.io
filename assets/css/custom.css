@@ -347,10 +347,10 @@ body[data-theme="dark"] .uni-studio-footer {
 .page-experience .xp-card.xp-split-2 .xp-mosaic .t1{ background-position: 25% 60% !important; }
 .page-experience .xp-card.xp-split-2 .xp-mosaic .t2{ background-position: 75% center !important; }
 
-/* Chromie-specific mosaic (left large, right stacked) */
+/* Chromie-specific mosaic (left full height, right stacked) */
 .page-experience .xp-card.xp-chromie .xp-mosaic{
   display: grid !important;
-  grid-template-columns: 2fr 1fr !important;
+  grid-template-columns: 1fr 1fr !important;
   grid-template-rows: 1fr 1fr !important;
   gap: 0 !important;
 }
