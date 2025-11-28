@@ -402,6 +402,55 @@ body[data-theme="dark"] .uni-studio-footer {
   background-position: center !important;
 }
 
+/* ===== Mastec Civil: 4-tile hover layout (scoped) ===== */
+/* Left takes 2/3 width (columns 1-6), right side split into quadrants */
+.page-experience .xp-card.xp-mastec .xp-mosaic{
+  display: grid !important;
+  grid-template-columns: repeat(9, 1fr) !important;
+  grid-template-rows: 1fr 1fr 1fr !important;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+/* Left tile (t1): columns 1-6, rows 1-3 (full height, 2/3 width) */
+.page-experience .xp-card.xp-mastec .xp-mosaic .t1 { 
+  grid-column: 1 / 7 !important; 
+  grid-row: 1 / 4 !important; 
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+/* Top-right tile (t2): columns 7-9, rows 1-2 */
+.page-experience .xp-card.xp-mastec .xp-mosaic .t2 { 
+  grid-column: 7 / 10 !important; 
+  grid-row: 1 / 3 !important; 
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+/* Bottom-left tile (t3): column 7, row 3 */
+.page-experience .xp-card.xp-mastec .xp-mosaic .t3 { 
+  grid-column: 7 / 8 !important; 
+  grid-row: 3 / 4 !important; 
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+/* Bottom-right tile (t4): columns 8-9, row 3 */
+.page-experience .xp-card.xp-mastec .xp-mosaic .t4 { 
+  grid-column: 8 / 10 !important; 
+  grid-row: 3 / 4 !important; 
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Ensure Mastec tiles are visible on hover (inherit global animation) */
+.page-experience .xp-card.xp-mastec:hover .xp-mosaic .xp-tile { opacity: 1 !important; transform: translateY(0) !important; }
+
 /* ===== Kimberly-Clark: Pinwheel hover layout (scoped) ===== */
 /* True pinwheel: specific grid spans for each image with no empty space */
 .page-experience .xp-card.xp-kimberly .xp-mosaic{
