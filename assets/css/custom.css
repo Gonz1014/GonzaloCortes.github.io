@@ -115,11 +115,7 @@ body[data-theme="dark"] .uni-studio-footer {
    which works for most monochrome or single-color SVG logos. If your SVG contains
    multiple colors you can replace this with a dedicated white SVG file and swap
    the `src` via JS instead. */
-html.dark .site-logo,
-body.dark .site-logo,
-.dark .site-logo,
-html[data-theme="dark"] .site-logo,
-body[data-theme="dark"] .site-logo {
+html.uk-dark .site-logo {
   filter: invert(1) brightness(1.05) !important; /* renders logo as light/white */
 }
 
@@ -163,19 +159,11 @@ body[data-theme="dark"] .site-logo {
 }
 
 /* Make dividers dark when the site is in 'dark' (light-background) theme */
-html.dark .uni-studio-footer #contact .contact-rule,
-body.dark .uni-studio-footer #contact .contact-rule,
-.dark .uni-studio-footer #contact .contact-rule,
-html[data-theme="dark"] .uni-studio-footer #contact .contact-rule,
-body[data-theme="dark"] .uni-studio-footer #contact .contact-rule {
+html.uk-dark .uni-studio-footer #contact .contact-rule {
   background: rgba(0,0,0,0.95) !important;
 }
 
-html.dark .uni-studio-footer .footer-bottom-rule,
-body.dark .uni-studio-footer .footer-bottom-rule,
-.dark .uni-studio-footer .footer-bottom-rule,
-html[data-theme="dark"] .uni-studio-footer .footer-bottom-rule,
-body[data-theme="dark"] .uni-studio-footer .footer-bottom-rule {
+html.uk-dark .uni-studio-footer .footer-bottom-rule {
   background: rgba(0,0,0,0.95) !important;
 }
 
