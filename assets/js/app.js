@@ -295,15 +295,41 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Default Leaflet icon (fallback if CSS isn't applied)
+  var defaultIcon = L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
   var markers = [];
   validCities.forEach(function (city) {
+    // Custom circular pin (uses CSS to be visible)
     var icon = L.divIcon({
       html: '<div class="city-pin"></div>',
       className: 'leaflet-div-icon city-pin-wrapper',
       iconSize: [18, 18],
       iconAnchor: [9, 9]
     });
-    var marker = L.marker([city.lat, city.lng], { icon: icon, zIndexOffset: 500 }).addTo(map);
+    var marker = L.marker([city.lat, city.lng], { icon: icon, zIndexOffset: 500, title: city.name }).addTo(map);
+
+    // If the custom pin ends up effectively invisible (e.g., CSS missing), swap to default Leaflet marker
+    function ensureVisible() {
+      var root = marker.getElement();
+      var el = root ? root.querySelector('.city-pin') : null;
+      if (!el) return;
+      var w = parseFloat(getComputedStyle(el).width || '0');
+      if (!w || w < 4) {
+        marker.setIcon(defaultIcon);
+      }
+    }
+    marker.on('add', ensureVisible);
+    setTimeout(ensureVisible, 50);
+
     var pinEl = marker.getElement() ? marker.getElement().querySelector('.city-pin') : null;
 
     marker.on('add', function () {
