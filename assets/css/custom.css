@@ -54,6 +54,26 @@ body[data-theme="dark"] .uni-studio-footer {
   filter: invert(1) !important;
 }
 
+/* Make the SVG icon sit comfortably inside the box and scale with it */
+.contact-icon-btn span[data-uk-icon],
+.contact-icon-btn svg {
+  width: 58% !important;
+  height: 58% !important;
+  display: block !important;
+}
+
+/* Optional variant: remove the box and let the icon fill the area
+   Use class `contact-icon-btn--no-box` on the anchor to enable */
+.contact-icon-btn--no-box {
+  border: none !important;
+  background: transparent !important;
+}
+.contact-icon-btn--no-box span[data-uk-icon],
+.contact-icon-btn--no-box svg {
+  width: 86% !important;
+  height: 86% !important;
+}
+
 /* Contact section visual tweaks */
 .uni-studio-footer #contact h2 {
   margin-bottom: 8px !important;
@@ -78,6 +98,23 @@ body[data-theme="dark"] .uni-studio-footer {
   background: rgba(255,255,255,0.95);
   margin: 28px auto !important;
   border-radius: 2px;
+}
+
+/* Make dividers dark when the site is in 'dark' (light-background) theme */
+html.dark .uni-studio-footer #contact .contact-rule,
+body.dark .uni-studio-footer #contact .contact-rule,
+.dark .uni-studio-footer #contact .contact-rule,
+html[data-theme="dark"] .uni-studio-footer #contact .contact-rule,
+body[data-theme="dark"] .uni-studio-footer #contact .contact-rule {
+  background: rgba(0,0,0,0.95) !important;
+}
+
+html.dark .uni-studio-footer .footer-bottom-rule,
+body.dark .uni-studio-footer .footer-bottom-rule,
+.dark .uni-studio-footer .footer-bottom-rule,
+html[data-theme="dark"] .uni-studio-footer .footer-bottom-rule,
+body[data-theme="dark"] .uni-studio-footer .footer-bottom-rule {
+  background: rgba(0,0,0,0.95) !important;
 }
 
 /* Reduce the large default footer spacing so the block feels tighter */
