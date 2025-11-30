@@ -105,22 +105,22 @@ body[data-theme="dark"] .uni-studio-footer {
   width: auto;
   height: 320px; /* extra-large on-page logo */
   max-height: 320px;
-  transition: height 180ms ease, opacity 180ms ease;
+  transition: height 180ms ease, opacity 180ms ease, filter 180ms ease;
+  /* Default/day mode: show the SVG's original colors (no forced filter) */
+  filter: none !important;
 }
 
 /* ---------- SITE LOGO THEME COLOR (day/night) ---------- */
-/* Default/day mode: render logo as solid black (works for PNG/JPG/SVG in <img>) */
-.site-logo {
-  filter: brightness(0) saturate(100%) !important; /* force black */
-}
-
-/* Night/dark mode: flip to white */
+/* Dark mode: make the logo appear white for contrast. We use invert and brightness
+   which works for most monochrome or single-color SVG logos. If your SVG contains
+   multiple colors you can replace this with a dedicated white SVG file and swap
+   the `src` via JS instead. */
 html.dark .site-logo,
 body.dark .site-logo,
 .dark .site-logo,
 html[data-theme="dark"] .site-logo,
 body[data-theme="dark"] .site-logo {
-  filter: invert(1) brightness(100%) !important; /* force white */
+  filter: invert(1) brightness(1.05) !important; /* renders logo as light/white */
 }
 
 /* When navbar becomes sticky, reduce logo size to match the small GC */
