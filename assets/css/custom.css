@@ -234,21 +234,31 @@ body[data-theme="dark"] .uni-studio-footer .footer-bottom-rule {
 }
 
 
-/* ---------- SUPER-SIZED ICONS ~ H1 SCALE ---------- */
+/* ---------- ICON SIZE (smaller & side-by-side) ---------- */
 :root {
-  /* Target size similar to the hero "Contact" heading */
-  --contact-icon-size: clamp(240px, 22vmin, 520px);
+  /* Smaller default so icons sit side-by-side on most screens */
+  --contact-icon-size: clamp(110px, 12vmin, 180px);
 }
 
-.uni-studio-footer .contact-links .uk-icon svg {
+@media (max-width: 600px) {
+  :root { --contact-icon-size: clamp(80px, 18vw, 120px); }
+}
+
+/* Tighter gap; ensure row layout and allow wrapping if needed */
+.uni-studio-footer .contact-links {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: clamp(16px, 3vmin, 32px) !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Ensure the svg follows the variable size */
+.uni-studio-footer .contact-links .uk-icon svg,
+.uni-studio-footer .contact-links [data-uk-icon] svg {
   width: var(--contact-icon-size) !important;
   height: var(--contact-icon-size) !important;
-}
-
-/* Slightly larger spacing so the big icons can breathe */
-.uni-studio-footer .contact-links {
-  gap: clamp(28px, 6vmin, 84px);
-  margin-top: clamp(12px, 3vmin, 36px);
 }
 /* =============================
    EXPERIENCE PAGE (scoped styles)
