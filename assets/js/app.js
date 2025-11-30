@@ -151,6 +151,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (code) visitedCountries.add(code);
     c.status = "visited"; // force visited status
   });
+  // Fallback: if no valid cities, bail early
+  if (!validCities.length) return;
 
   // Rough country bounding boxes to tint visited countries
   // Simplified country polygons (approximate outlines)
@@ -297,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
   validCities.forEach(function (city) {
     var icon = L.divIcon({
       html: '<div class="city-pin"></div>',
-      className: '',
+      className: 'leaflet-div-icon city-pin-wrapper',
       iconSize: [18, 18],
       iconAnchor: [9, 9]
     });
