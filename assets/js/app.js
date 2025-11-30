@@ -6,6 +6,8 @@ var cityData = [
   { id: "madrid-es",               name: "Madrid, Spain",                status: "visited", lat: 40.4168, lng: -3.7038, image: "assets/images/cities/madrid-es.jpg",               caption: "" },
   { id: "segovia-es",              name: "Segovia, Spain",               status: "visited", lat: 40.9429, lng: -4.1088, image: "assets/images/cities/segovia-es.jpg",              caption: "" },
   { id: "valle-de-los-caidos-es",  name: "Valle de los Caídos, Spain",   status: "visited", lat: 40.6414, lng: -4.1513, image: "assets/images/cities/valle-de-los-caidos-es.jpg",   caption: "" },
+  { id: "barcelona-es",            name: "Barcelona, Spain",             status: "visited", lat: 41.3874, lng: 2.1686,  image: "assets/images/cities/barcelona-es.jpg",            caption: "" },
+  { id: "ibiza-es",                name: "Ibiza, Spain",                 status: "visited", lat: 38.9067, lng: 1.4206,  image: "assets/images/cities/ibiza-es.jpg",                caption: "" },
 
   // United States
   { id: "miami-us",                name: "Miami, USA",                   status: "visited", lat: 25.7617, lng: -80.1918, image: "assets/images/cities/miami-us.jpg",                caption: "" },
@@ -15,6 +17,11 @@ var cityData = [
   { id: "new-haven-us",            name: "New Haven, USA",               status: "visited", lat: 41.3083, lng: -72.9279, image: "assets/images/cities/new-haven-us.jpg",            caption: "" },
   { id: "hanover-us",              name: "Hanover, USA",                 status: "visited", lat: 43.7022, lng: -72.2895, image: "assets/images/cities/hanover-us.jpg",              caption: "" },
   { id: "mercer-us",               name: "Mercer, USA",                  status: "visited", lat: 47.5707, lng: -122.2221, image: "assets/images/cities/mercer-us.jpg",               caption: "" }, // Mercer Island, WA as placeholder
+  { id: "san-diego-us",            name: "San Diego, USA",               status: "visited", lat: 32.7157, lng: -117.1611, image: "assets/images/cities/san-diego-us.jpg",           caption: "" },
+  { id: "san-francisco-us",        name: "San Francisco, USA",           status: "visited", lat: 37.7749, lng: -122.4194, image: "assets/images/cities/san-francisco-us.jpg",       caption: "" },
+  { id: "vail-us",                 name: "Vail, USA",                    status: "visited", lat: 39.6403, lng: -106.3742, image: "assets/images/cities/vail-us.jpg",                caption: "" },
+  { id: "oak-ridge-us",            name: "Oak Ridge, USA",               status: "visited", lat: 36.0104, lng: -84.2696,  image: "assets/images/cities/oak-ridge-us.jpg",           caption: "" },
+  { id: "hubbard-glacier-us",      name: "Hubbard Glacier, Alaska, USA", status: "visited", lat: 60.002,  lng: -139.505, image: "assets/images/cities/hubbard-glacier-us.jpg",      caption: "" },
   { id: "honolulu-us",             name: "Honolulu, USA",                status: "visited", lat: 21.3069, lng: -157.8583, image: "assets/images/cities/honolulu-us.jpg",             caption: "" },
   { id: "kauai-us",                name: "Kauai, USA",                   status: "visited", lat: 22.0964, lng: -159.5261, image: "assets/images/cities/kauai-us.jpg",                caption: "" },
   { id: "hawaii-island-us",        name: "Hawaii Island (Big Island), USA", status: "visited", lat: 19.5429, lng: -155.6659, image: "assets/images/cities/hawaii-island-us.jpg",      caption: "" },
@@ -24,8 +31,11 @@ var cityData = [
   { id: "oaxaca-mx",               name: "Oaxaca, Mexico",               status: "visited", lat: 17.0732, lng: -96.7266, image: "assets/images/cities/oaxaca-mx.jpg",               caption: "" },
   { id: "bacalar-mx",              name: "Bacalar, Mexico",              status: "visited", lat: 18.6772, lng: -88.3923, image: "assets/images/cities/bacalar-mx.jpg",              caption: "" },
   { id: "mexico-city-mx",          name: "Ciudad de México, Mexico",     status: "visited", lat: 19.4326, lng: -99.1332, image: "assets/images/cities/mexico-city-mx.jpg",          caption: "" },
+  { id: "merida-mx",               name: "Mérida, Mexico",               status: "visited", lat: 20.9674, lng: -89.5926, image: "assets/images/cities/merida-mx.jpg",               caption: "" },
+  { id: "monterrey-mx",            name: "Monterrey, Mexico",            status: "visited", lat: 25.6866, lng: -100.3161, image: "assets/images/cities/monterrey-mx.jpg",           caption: "" },
   { id: "puerto-vallarta-mx",      name: "Puerto Vallarta, Mexico",      status: "visited", lat: 20.6534, lng: -105.2253, image: "assets/images/cities/puerto-vallarta-mx.jpg",      caption: "" },
   { id: "valle-de-bravo-mx",       name: "Valle de Bravo, Mexico",       status: "visited", lat: 19.1950, lng: -100.1310, image: "assets/images/cities/valle-de-bravo-mx.jpg",       caption: "" },
+  { id: "aguascalientes-mx",       name: "Aguascalientes, Mexico",       status: "visited", lat: 21.8853, lng: -102.2916, image: "assets/images/cities/aguascalientes-mx.jpg",      caption: "" },
 
   // Australia
   { id: "sydney-au",               name: "Sydney, Australia",            status: "visited", lat: -33.8688, lng: 151.2093, image: "assets/images/cities/sydney-au.jpg",               caption: "" },
@@ -77,7 +87,28 @@ var cityData = [
   { id: "kyoto-jp",                name: "Kyoto, Japan",                 status: "visited", lat: 35.0116, lng: 135.7681, image: "assets/images/cities/kyoto-jp.jpg",                caption: "" },
   { id: "osaka-jp",                name: "Osaka, Japan",                 status: "visited", lat: 34.6937, lng: 135.5023, image: "assets/images/cities/osaka-jp.jpg",                caption: "" },
   { id: "sapporo-jp",              name: "Sapporo, Japan",               status: "visited", lat: 43.0618, lng: 141.3545, image: "assets/images/cities/sapporo-jp.jpg",              caption: "" },
-  { id: "niseko-jp",               name: "Niseko, Japan",                status: "visited", lat: 42.8048, lng: 140.6874, image: "assets/images/cities/niseko-jp.jpg",               caption: "" }
+  { id: "niseko-jp",               name: "Niseko, Japan",                status: "visited", lat: 42.8048, lng: 140.6874, image: "assets/images/cities/niseko-jp.jpg",               caption: "" },
+
+  // UK & Europe
+  { id: "london-gb",               name: "London, United Kingdom",       status: "visited", lat: 51.5074, lng: -0.1278,  image: "assets/images/cities/london-gb.jpg",              caption: "" },
+  { id: "berlin-de",               name: "Berlin, Germany",              status: "visited", lat: 52.5200, lng: 13.4050,  image: "assets/images/cities/berlin-de.jpg",              caption: "" },
+  { id: "paris-fr",                name: "Paris, France",                status: "visited", lat: 48.8566, lng: 2.3522,   image: "assets/images/cities/paris-fr.jpg",               caption: "" },
+  { id: "amsterdam-nl",            name: "Amsterdam, Netherlands",       status: "visited", lat: 52.3676, lng: 4.9041,   image: "assets/images/cities/amsterdam-nl.jpg",           caption: "" },
+  { id: "prague-cz",               name: "Prague, Czech Republic",       status: "visited", lat: 50.0755, lng: 14.4378,  image: "assets/images/cities/prague-cz.jpg",              caption: "" },
+  { id: "split-hr",                name: "Split, Croatia",               status: "visited", lat: 43.5081, lng: 16.4402,  image: "assets/images/cities/split-hr.jpg",               caption: "" },
+  { id: "hvar-hr",                 name: "Hvar, Croatia",                status: "visited", lat: 43.1727, lng: 16.4424,  image: "assets/images/cities/hvar-hr.jpg",                caption: "" },
+  { id: "mykonos-gr",              name: "Mykonos, Greece",              status: "visited", lat: 37.4467, lng: 25.3289,  image: "assets/images/cities/mykonos-gr.jpg",             caption: "" },
+  { id: "istanbul-tr",             name: "Istanbul, Turkey",             status: "visited", lat: 41.0082, lng: 28.9784,  image: "assets/images/cities/istanbul-tr.jpg",            caption: "" },
+  { id: "amalfi-coast-it",         name: "Amalfi Coast (Naples/Positano/Sorrento), Italy", status: "visited", lat: 40.6280, lng: 14.4867, image: "assets/images/cities/amalfi-coast-it.jpg", caption: "" },
+  { id: "civitavecchia-it",        name: "Civitavecchia, Italy",         status: "visited", lat: 42.0930, lng: 11.7926, image: "assets/images/cities/civitavecchia-it.jpg",        caption: "" },
+  { id: "pisa-it",                 name: "Pisa, Italy",                  status: "visited", lat: 43.7228, lng: 10.4017, image: "assets/images/cities/pisa-it.jpg",                 caption: "" },
+  { id: "varese-it",               name: "Varese, Italy",                status: "visited", lat: 45.8200, lng: 8.8250,  image: "assets/images/cities/varese-it.jpg",               caption: "" },
+  { id: "marseille-fr",            name: "Marseille, France",            status: "visited", lat: 43.2965, lng: 5.3698,  image: "assets/images/cities/marseille-fr.jpg",            caption: "" },
+  { id: "palermo-it",              name: "Palermo, Italy",               status: "visited", lat: 38.1157, lng: 13.3615, image: "assets/images/cities/palermo-it.jpg",              caption: "" },
+  { id: "cagliari-it",             name: "Cagliari, Italy",              status: "visited", lat: 39.2238, lng: 9.1217,  image: "assets/images/cities/cagliari-it.jpg",             caption: "" },
+
+  // Canada
+  { id: "toronto-ca",              name: "Toronto, Canada",              status: "visited", lat: 43.6532, lng: -79.3832, image: "assets/images/cities/toronto-ca.jpg",              caption: "" }
 ];
 // Initialize Leaflet map on About page
 document.addEventListener('DOMContentLoaded', function () {
@@ -132,7 +163,17 @@ document.addEventListener('DOMContentLoaded', function () {
     cn: [[18.0, 73.0], [53.6, 135.0]],
     nz: [[-47.5, 166.0], [-34.0, 179.0]],
     sg: [[1.20, 103.6], [1.47, 104.1]],
-    jp: [[24.0, 123.0], [46.0, 146.0]]
+    jp: [[24.0, 123.0], [46.0, 146.0]],
+    gb: [[49.9, -8.6], [60.9, 1.8]],
+    de: [[47.2, 5.5], [55.1, 15.5]],
+    fr: [[41.0, -5.5], [51.2, 9.7]],
+    nl: [[50.7, 3.3], [53.7, 7.3]],
+    cz: [[48.5, 12.0], [51.1, 18.0]],
+    hr: [[42.3, 13.4], [46.6, 19.4]],
+    gr: [[34.6, 19.3], [41.8, 28.3]],
+    tr: [[35.8, 25.6], [42.3, 45.0]],
+    it: [[36.6, 6.6], [47.1, 18.5]],
+    ca: [[41.0, -141.0], [83.0, -52.0]]
   };
   var visitedFillColor = "#7fd1ae";
 
