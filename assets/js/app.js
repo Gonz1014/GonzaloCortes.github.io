@@ -109,6 +109,33 @@ document.addEventListener('DOMContentLoaded', function () {
     return typeof c.lat === 'number' && typeof c.lng === 'number';
   });
 
+  // Determine visited countries from IDs (expects "-xx" country code at end)
+  var countryFromId = function (id) {
+    var m = id && id.match(/-([a-z]{2})$/);
+    return m ? m[1] : null;
+  };
+  var visitedCountries = new Set();
+  validCities.forEach(function (c) {
+    var code = countryFromId(c.id);
+    if (code) visitedCountries.add(code);
+    c.status = "visited"; // force visited status
+  });
+
+  // Rough country bounding boxes to tint visited countries
+  var countryBounds = {
+    us: [[24.396308, -125.0], [49.384358, -66.885444]],
+    es: [[35.9, -9.3], [43.8, 3.3]],
+    mx: [[14.4, -118.4], [32.7, -86.7]],
+    au: [[-44.0, 112.9], [-10.7, 154.0]],
+    my: [[0.8, 99.6], [7.5, 119.3]],
+    id: [[-11.0, 95.0], [6.0, 141.0]],
+    cn: [[18.0, 73.0], [53.6, 135.0]],
+    nz: [[-47.5, 166.0], [-34.0, 179.0]],
+    sg: [[1.20, 103.6], [1.47, 104.1]],
+    jp: [[24.0, 123.0], [46.0, 146.0]]
+  };
+  var visitedFillColor = "#7fd1ae";
+
   var showCard = function (city) {
     if (!hoverCard || !hoverImg || !hoverName || !hoverCaption) return;
     hoverCard.style.display = 'block';
@@ -126,9 +153,20 @@ document.addEventListener('DOMContentLoaded', function () {
     if (hoverCard) hoverCard.style.display = 'none';
   };
 
+  // Paint visited countries
+  visitedCountries.forEach(function (code) {
+    if (!countryBounds[code]) return;
+    L.rectangle(countryBounds[code], {
+      color: visitedFillColor,
+      fillColor: visitedFillColor,
+      fillOpacity: 0.2,
+      weight: 1
+    }).addTo(map);
+  });
+
   var markers = [];
   validCities.forEach(function (city) {
-    var iconHtml = '<div class="city-marker" style="' + (city.image ? '--pin-img:url(' + city.image + ');' : '') + '"></div>';
+    var iconHtml = '<div class="city-marker"></div>';
     var icon = L.divIcon({
       html: iconHtml,
       iconSize: [18, 18],

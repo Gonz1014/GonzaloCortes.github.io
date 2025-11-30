@@ -88,21 +88,12 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #ffb347, #ff8050);
+        background: #ff7f50; /* uniform visited pin color */
         border: 2px solid #ffffff;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
         position: relative;
         overflow: hidden;
-    }
-    .city-marker::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: var(--pin-img, linear-gradient(135deg, #7fd1ae, #5abf95));
-        background-size: cover;
-        background-position: center;
-        filter: saturate(1.1);
     }
     .city-marker.is-hovered {
         transform: scale(1.25);
