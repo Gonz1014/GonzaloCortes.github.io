@@ -34,10 +34,10 @@ body[data-theme="dark"] .uni-studio-footer {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 60px !important;
-  height: 60px !important;
+  width: 76px !important;
+  height: 76px !important;
   border: 2px solid currentColor !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   background-color: transparent !important;
   color: inherit !important;
   text-decoration: none !important;
@@ -52,6 +52,37 @@ body[data-theme="dark"] .uni-studio-footer {
 
 .contact-icon-btn:hover svg {
   filter: invert(1) !important;
+}
+
+/* Contact section visual tweaks */
+.uni-studio-footer #contact h2 {
+  margin-bottom: 8px !important;
+}
+.uni-studio-footer #contact .contact-rule {
+  width: 140px;
+  height: 2px;
+  background: rgba(255,255,255,0.95);
+  margin: 12px auto !important;
+  border-radius: 2px;
+}
+.uni-studio-footer #contact p.uk-text-large {
+  margin-bottom: 10px !important;
+}
+.uni-studio-footer .contact-links {
+  margin-top: 10px !important;
+  gap: 28px !important;
+}
+.uni-studio-footer .footer-bottom-rule {
+  width: 140px;
+  height: 2px;
+  background: rgba(255,255,255,0.95);
+  margin: 28px auto !important;
+  border-radius: 2px;
+}
+
+/* Reduce the large default footer spacing so the block feels tighter */
+.uni-studio-footer .uk-margin-xlarge-top {
+  margin-top: 28px !important;
 }
 
 /* Neutralize hard-coded utility color classes inside the footer */
