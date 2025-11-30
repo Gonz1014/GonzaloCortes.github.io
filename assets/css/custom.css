@@ -139,7 +139,7 @@ body.dark .uni-studio-footer .footer-bottom-rule,
 .dark .uni-studio-footer .footer-bottom-rule,
 html[data-theme="dark"] .uni-studio-footer .footer-bottom-rule,
 body[data-theme="dark"] .uni-studio-footer .footer-bottom-rule {
-  background: rgba(0,0,0,0.2) !important;
+  background: rgba(0,0,0,0.95) !important;
 }
 
 /* Reduce the large default footer spacing so the block feels tighter */
