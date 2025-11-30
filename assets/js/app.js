@@ -101,6 +101,7 @@ var cityData = [
   { id: "naples-it",               name: "Naples, Italy",                status: "visited", lat: 40.8518, lng: 14.2681, image: "assets/images/cities/naples-it.jpg",               caption: "" },
   { id: "positano-it",             name: "Positano, Italy",              status: "visited", lat: 40.6281, lng: 14.4845, image: "assets/images/cities/positano-it.jpg",             caption: "" },
   { id: "sorrento-it",             name: "Sorrento, Italy",              status: "visited", lat: 40.6263, lng: 14.3758, image: "assets/images/cities/sorrento-it.jpg",             caption: "" },
+  { id: "como-it",                 name: "Como, Italy",                  status: "visited", lat: 45.8081, lng: 9.0852,  image: "assets/images/cities/como-it.jpg",                caption: "" },
   { id: "civitavecchia-it",        name: "Civitavecchia, Italy",         status: "visited", lat: 42.0930, lng: 11.7926, image: "assets/images/cities/civitavecchia-it.jpg",        caption: "" },
   { id: "pisa-it",                 name: "Pisa, Italy",                  status: "visited", lat: 43.7228, lng: 10.4017, image: "assets/images/cities/pisa-it.jpg",                 caption: "" },
   { id: "varese-it",               name: "Varese, Italy",                status: "visited", lat: 45.8200, lng: 8.8250,  image: "assets/images/cities/varese-it.jpg",               caption: "" },
@@ -297,17 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Default Leaflet icon (fallback if CSS isn't applied)
-  var defaultIcon = L.icon({
-    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-
   var markers = [];
   validCities.forEach(function (city) {
     // Custom circular pin (uses CSS to be visible)
@@ -318,19 +308,6 @@ document.addEventListener('DOMContentLoaded', function () {
       iconAnchor: [9, 9]
     });
     var marker = L.marker([city.lat, city.lng], { icon: icon, zIndexOffset: 500, title: city.name }).addTo(map);
-
-    // If the custom pin ends up effectively invisible (e.g., CSS missing), swap to default Leaflet marker
-    function ensureVisible() {
-      var root = marker.getElement();
-      var el = root ? root.querySelector('.city-pin') : null;
-      if (!el) return;
-      var w = parseFloat(getComputedStyle(el).width || '0');
-      if (!w || w < 4) {
-        marker.setIcon(defaultIcon);
-      }
-    }
-    marker.on('add', ensureVisible);
-    setTimeout(ensureVisible, 50);
 
     var pinEl = marker.getElement() ? marker.getElement().querySelector('.city-pin') : null;
 
