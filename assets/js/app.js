@@ -284,36 +284,42 @@ document.addEventListener('DOMContentLoaded', function () {
         L.polygon(shape, {
           color: visitedFillColor,
           fillColor: visitedFillColor,
-          fillOpacity: 0.2,
+          fillOpacity: 0.18,
           weight: 1
         }).addTo(map);
       });
     }
   });
 
+  // Pins
   var markers = [];
   validCities.forEach(function (city) {
-    var iconHtml = '<div class="city-marker"></div>';
-    var icon = L.divIcon({
-      html: iconHtml,
-      iconSize: [18, 18],
-      className: '' // use inner div for styling
-    });
-    var marker = L.marker([city.lat, city.lng], { icon: icon }).addTo(map);
+    var marker = L.circleMarker([city.lat, city.lng], {
+      radius: 7,
+      color: "#ffffff",
+      weight: 2,
+      fillColor: "#ff7f50",
+      fillOpacity: 1,
+      className: "city-marker"
+    }).addTo(map);
+
+    var enlarge = function () {
+      marker.setStyle({ radius: 9, weight: 3 });
+    };
+    var reset = function () {
+      marker.setStyle({ radius: 7, weight: 2 });
+    };
 
     marker.on('mouseover', function () {
-      if (marker._icon && marker._icon.firstChild) {
-        marker._icon.firstChild.classList.add('is-hovered');
-      }
+      enlarge();
       showCard(city);
     });
     marker.on('mouseout', function () {
-      if (marker._icon && marker._icon.firstChild) {
-        marker._icon.firstChild.classList.remove('is-hovered');
-      }
+      reset();
       hideCard();
     });
     marker.on('click', function () {
+      enlarge();
       showCard(city);
     });
     markers.push(marker);
