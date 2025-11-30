@@ -74,6 +74,31 @@ body[data-theme="dark"] .uni-studio-footer {
   height: 86% !important;
 }
 
+/* For boxless variant: draw a box behind the icon sized to the icon */
+.contact-icon-btn--no-box {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.contact-icon-btn--no-box::before {
+  content: "";
+  position: absolute !important;
+  left: 7% !important; /* (100% - 86%) / 2 to center the box behind icon */
+  top: 7% !important;
+  width: 86% !important;
+  height: 86% !important;
+  border: 2px solid currentColor !important;
+  border-radius: 12px !important;
+  background: transparent !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+.contact-icon-btn--no-box svg,
+.contact-icon-btn--no-box span[data-uk-icon] {
+  z-index: 1 !important; /* ensure icon sits above the box */
+}
+
 /* Contact section visual tweaks */
 .uni-studio-footer #contact h2 {
   margin-bottom: 8px !important;
