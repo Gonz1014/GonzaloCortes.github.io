@@ -122,11 +122,12 @@ document.addEventListener('DOMContentLoaded', function () {
     zoomControl: true
   }).setView([20, 0], 2); // [lat, lng], zoom
 
-  // Add OpenStreetMap tiles
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
+  // Add Carto Dark Matter tiles for dark basemap
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    maxZoom: 19,
     minZoom: 1,
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
   }).addTo(map);
 
   // --- Markers + hover card wiring ---
@@ -152,124 +153,88 @@ document.addEventListener('DOMContentLoaded', function () {
     if (code) visitedCountries.add(code);
     c.status = "visited"; // force visited status
   });
+  // --- Country fills layer (GeoJSON) ---
+  // Create panes so country fills sit UNDER markers
+  map.createPane('countries-fill');
+  map.getPane('countries-fill').style.zIndex = 350;   // below markerPane (600)
+  map.getPane('countries-fill').style.pointerEvents = 'auto';
+
+  // Mark any countries you've LIVED in here (ISO-2 codes, lowercase)
+  var livedCountries = new Set([
+    // e.g., 'us', 'au'
+  ]);
+
+  // Determine status for an ISO-2 code
+  function statusForIso(iso) {
+    if (!iso) return 'notyet';
+    iso = iso.toLowerCase();
+    if (livedCountries.has(iso)) return 'lived';
+    if (visitedCountries.has(iso)) return 'visited';
+    return 'notyet';
+  }
+
+  // Colors that look great on a dark basemap
+  var FILL = { lived: '#f5b301', visited: '#ff9900', notyet: '#1a1a1a' };
+  var STROKE = { lived: '#d39b00', visited: '#e08a00', notyet: '#2a2a2a' };
+
+  function countryStyle(feature) {
+    var iso = (feature.properties.ISO_A2 || feature.properties.iso_a2 || feature.properties.ISO2 || '').toLowerCase();
+    var status = statusForIso(iso);
+    return {
+      pane: 'countries-fill',
+      fillColor: FILL[status],
+      fillOpacity: status === 'notyet' ? 0.08 : 0.42,
+      color: STROKE[status],
+      weight: status === 'notyet' ? 0.5 : 1,
+      opacity: 1
+    };
+  }
+
+  function onEachCountry(feature, layer) {
+    var name = feature.properties.NAME_EN || feature.properties.ADMIN || feature.properties.name || '';
+    layer.bindTooltip(name, { sticky: true });
+    layer.on({
+      mouseover: function (e) {
+        e.target.setStyle({ weight: 1.5, fillOpacity: Math.min((e.target.options.fillOpacity || 0.4) + 0.1, 0.75) });
+      },
+      mouseout: function (e) {
+        countriesLayer.resetStyle(e.target);
+      },
+      click: function (e) {
+        map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
+      }
+    });
+  }
+
+  var countriesLayer = null;
+  fetch('assets/data/world-countries-simplified.geojson')
+    .then(function (r) { return r.json(); })
+    .then(function (geo) {
+      countriesLayer = L.geoJSON(geo, {
+        style: countryStyle,
+        onEachFeature: onEachCountry,
+        pane: 'countries-fill'
+      }).addTo(map);
+    })
+    .catch(function (err) {
+      console.warn('Countries GeoJSON not found. Add assets/data/world-countries-simplified.geojson', err);
+    });
   // Fallback: if no valid cities, bail early
   if (!validCities.length) return;
 
-  // Rough country bounding boxes to tint visited countries
-  // Simplified country polygons (approximate outlines)
-  var countryShapes = {
-    us: [
-      [
-        [49.38, -124.7], [47.0, -124.7], [45.0, -123.0], [41.0, -124.0], [39.0, -123.0],
-        [37.0, -122.0], [36.0, -120.0], [34.0, -118.0], [32.0, -117.0], [29.0, -114.0],
-        [27.0, -110.0], [25.5, -104.0], [25.5, -97.0], [26.0, -82.0], [30.0, -81.0],
-        [33.0, -80.0], [35.0, -75.0], [38.0, -74.0], [40.0, -73.0], [45.0, -70.0],
-        [47.0, -69.0], [48.8, -69.0], [49.38, -95.0], [49.38, -110.0], [49.38, -124.7]
-      ],
-      [
-        [55.0, -132.0], [57.0, -135.0], [59.0, -140.0], [60.0, -146.0], [62.0, -150.0],
-        [64.0, -154.0], [66.0, -152.0], [67.5, -150.0], [69.0, -142.0], [68.0, -136.0],
-        [66.0, -132.0], [62.0, -132.0], [58.0, -133.0], [55.0, -132.0]
-      ],
-      [
-        [18.0, -160.0], [19.5, -160.0], [21.0, -157.0], [22.5, -155.0], [22.5, -153.0],
-        [21.0, -152.0], [19.5, -154.0], [18.0, -156.0], [18.0, -160.0]
-      ]
-    ],
-    mx: [
-      [32.7, -117.0], [29.0, -114.0], [28.0, -111.0], [24.0, -109.0], [22.0, -105.0],
-      [19.0, -106.0], [17.0, -104.0], [15.0, -96.0], [14.5, -92.0], [17.8, -90.0],
-      [19.0, -87.0], [21.5, -87.0], [24.0, -97.0], [27.0, -99.0], [31.0, -106.0],
-      [32.7, -117.0]
-    ],
-    es: [
-      [36.0, -6.5], [36.8, -9.3], [43.0, -9.3], [43.8, -3.0], [43.8, 3.3], [41.0, 3.3],
-      [39.0, 2.0], [38.0, 0.0], [36.7, -1.5], [36.0, -6.5]
-    ],
-    au: [
-      [-10.7, 143.0], [-11.0, 136.0], [-15.0, 129.0], [-17.0, 122.0], [-22.0, 114.0],
-      [-33.0, 114.0], [-34.0, 118.0], [-35.0, 130.0], [-38.0, 140.0], [-34.0, 149.0],
-      [-28.0, 153.0], [-22.0, 152.0], [-16.0, 146.0], [-10.7, 143.0]
-    ],
-    my: [
-      [1.0, 103.5], [4.0, 103.0], [5.5, 103.0], [6.7, 101.0], [6.3, 99.6], [4.5, 99.8],
-      [2.0, 100.2], [1.0, 103.5]
-    ],
-    id: [
-      [-8.0, 95.0], [1.0, 97.0], [5.0, 100.0], [2.0, 104.0], [-3.0, 108.0], [-6.0, 112.0],
-      [-8.0, 118.0], [-5.0, 122.0], [-2.0, 128.0], [-4.0, 133.0], [0.0, 135.0], [2.0, 141.0],
-      [-9.0, 140.0], [-10.0, 135.0], [-9.0, 125.0], [-9.0, 115.0], [-8.0, 95.0]
-    ],
-    cn: [
-      [18.0, 109.0], [20.0, 107.0], [23.0, 104.0], [26.0, 100.0], [30.0, 98.0], [33.0, 94.0],
-      [36.0, 90.0], [40.0, 88.0], [43.0, 90.0], [47.0, 95.0], [49.0, 103.0], [50.0, 110.0],
-      [47.0, 117.0], [45.0, 124.0], [42.0, 128.0], [38.0, 130.0], [33.0, 131.0], [27.0, 124.0],
-      [24.0, 118.0], [22.0, 114.0], [20.0, 111.0], [18.0, 109.0]
-    ],
-    nz: [
-      [-34.4, 172.0], [-37.0, 174.0], [-38.5, 176.0], [-40.0, 176.5], [-41.3, 175.5],
-      [-42.5, 173.0], [-43.8, 171.0], [-44.5, 170.0], [-45.9, 168.0], [-46.6, 167.0],
-      [-47.5, 169.0], [-46.0, 170.5], [-44.0, 171.5], [-42.0, 172.5], [-40.0, 174.5],
-      [-38.5, 175.5], [-36.0, 175.5], [-34.4, 172.0]
-    ],
-    sg: [
-      [1.25, 103.6], [1.47, 103.6], [1.47, 104.0], [1.25, 104.0], [1.25, 103.6]
-    ],
-    jp: [
-      [45.5, 141.0], [43.5, 145.0], [41.5, 142.0], [39.5, 141.0], [37.5, 138.0], [35.5, 136.0],
-      [33.0, 135.0], [32.0, 132.0], [33.0, 130.0], [34.0, 129.0], [35.0, 131.0], [36.5, 134.0],
-      [37.0, 138.0], [38.0, 140.0], [40.0, 141.0], [42.0, 140.0], [43.5, 141.0], [45.5, 141.0]
-    ],
-    gb: [
-      [50.0, -5.0], [51.0, -6.0], [53.0, -6.0], [55.0, -5.0], [57.0, -4.0],
-      [58.0, -2.0], [57.5, 0.5], [55.5, 1.5], [53.0, 1.0], [51.0, 0.0], [50.0, -1.0], [50.0, -5.0]
-    ],
-    de: [
-      [47.3, 7.0], [48.0, 5.5], [49.5, 6.0], [50.5, 6.8], [51.5, 6.0], [52.5, 8.5],
-      [53.3, 9.5], [54.7, 8.5], [55.0, 10.0], [54.5, 12.0], [53.5, 14.0], [52.0, 14.8],
-      [50.5, 15.0], [48.8, 13.5], [47.3, 12.0], [47.3, 7.0]
-    ],
-    fr: [
-      [51.0, 2.5], [50.0, -1.0], [48.5, -4.5], [46.5, -3.5], [45.0, -1.0], [43.6, 3.0],
-      [42.5, 3.0], [43.4, 7.5], [44.5, 7.6], [46.5, 6.0], [48.0, 6.8], [49.5, 5.0], [51.0, 2.5]
-    ],
-    nl: [
-      [53.7, 3.4], [53.4, 4.0], [52.7, 4.7], [51.8, 4.7], [51.4, 3.3], [52.5, 3.3], [53.7, 3.4]
-    ],
-    cz: [
-      [51.0, 12.2], [50.5, 15.0], [49.5, 18.0], [48.6, 17.0], [48.6, 13.0], [50.0, 12.0], [51.0, 12.2]
-    ],
-    hr: [
-      [46.5, 13.5], [45.5, 13.5], [44.0, 14.0], [43.5, 15.5], [44.8, 16.4], [45.5, 17.5], [46.3, 16.0], [46.5, 13.5]
-    ],
-    gr: [
-      [41.5, 26.0], [40.5, 24.0], [39.0, 23.0], [38.0, 22.0], [37.0, 21.0], [36.5, 23.5],
-      [37.5, 24.5], [38.5, 26.0], [39.5, 26.5], [41.0, 27.0], [41.5, 26.0]
-    ],
-    tr: [
-      [42.0, 26.0], [41.0, 29.0], [40.0, 32.0], [39.0, 35.0], [37.0, 36.5], [36.0, 39.0],
-      [36.0, 41.5], [37.5, 44.0], [40.0, 44.5], [41.5, 42.0], [42.3, 38.0], [42.0, 34.0], [42.0, 26.0]
-    ],
-    it: [
-      [46.5, 6.7], [45.0, 7.0], [44.0, 9.0], [43.0, 10.5], [41.0, 12.0], [40.0, 14.5],
-      [39.0, 16.0], [38.0, 15.5], [37.0, 14.0], [38.0, 12.5], [39.0, 10.0], [40.5, 8.5],
-      [44.0, 8.0], [46.0, 9.0], [46.5, 6.7]
-    ],
-    ca: [
-      [70.0, -141.0], [68.0, -133.0], [66.0, -120.0], [63.0, -110.0], [61.0, -100.0],
-      [58.0, -95.0], [55.0, -90.0], [52.0, -85.0], [50.0, -80.0], [48.0, -74.0],
-      [46.0, -72.0], [46.0, -66.0], [49.0, -63.0], [52.0, -60.0], [56.0, -60.0],
-      [60.0, -70.0], [65.0, -80.0], [70.0, -90.0], [72.0, -110.0], [73.0, -125.0],
-      [71.0, -135.0], [70.0, -141.0]
-    ]
-  };
-  var visitedFillColor = "#7fd1ae";
 
   var showCard = function (city) {
     if (!hoverCard || !hoverImg || !hoverName || !hoverCaption) return;
     hoverCard.style.display = 'block';
     hoverName.textContent = city.name;
     hoverCaption.textContent = city.caption || '';
+    if (hoverImg) {
+      hoverImg.onerror = function () {
+        this.onerror = null;
+        this.src = defaultImg;
+        this.style.background = 'linear-gradient(135deg, #c9d6ff, #8bacf7)';
+      };
+    }
     hoverImg.src = city.image || defaultImg;
     if (!city.image) {
       hoverImg.style.background = 'linear-gradient(135deg, #c9d6ff, #8bacf7)';
@@ -282,21 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (hoverCard) hoverCard.style.display = 'none';
   };
 
-  // Paint visited countries
-  visitedCountries.forEach(function (code) {
-    var shapes = countryShapes[code];
-    if (shapes) {
-      var polygons = Array.isArray(shapes[0] && shapes[0][0]) ? shapes : [shapes];
-      polygons.forEach(function (shape) {
-        L.polygon(shape, {
-          color: visitedFillColor,
-          fillColor: visitedFillColor,
-          fillOpacity: 0.18,
-          weight: 1
-        }).addTo(map);
-      });
-    }
-  });
 
   var markers = [];
   validCities.forEach(function (city) {
