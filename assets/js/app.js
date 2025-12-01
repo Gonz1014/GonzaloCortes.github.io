@@ -147,11 +147,19 @@ document.addEventListener('DOMContentLoaded', function () {
     var m = id && id.match(/-([a-z]{2})$/);
     return m ? m[1] : null;
   };
+  // Normalize ISO-2 edge cases to match GeoJSON (e.g., 'uk' => 'gb')
+  function normalizeIso(iso) {
+    if (!iso) return null;
+    iso = (iso + '').toLowerCase().trim();
+    if (iso === 'uk') return 'gb';
+    if (iso === 'el') return 'gr'; // sometimes Greece appears as EL in certain datasets
+    return iso;
+  }
   var visitedCountries = new Set();
   validCities.forEach(function (c) {
-    var code = countryFromId(c.id);
+    var code = normalizeIso(countryFromId(c.id));
     if (code) visitedCountries.add(code);
-    c.status = "visited"; // force visited status
+    c.status = "visited"; // keep city pin default unless overridden
   });
   // --- Country fills layer (GeoJSON) ---
   // Create panes so country fills sit UNDER markers
@@ -166,16 +174,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Determine status for an ISO-2 code
   function statusForIso(iso) {
+    iso = normalizeIso(iso);
     if (!iso) return 'notyet';
-    iso = iso.toLowerCase();
     if (livedCountries.has(iso)) return 'lived';
     if (visitedCountries.has(iso)) return 'visited';
     return 'notyet';
   }
 
-  // Colors on dark basemap (match legend: lived = orange, visited = green)
-  var FILL =   { lived: '#f5b301', visited: '#7fd1ae', notyet: 'transparent' };
-  var STROKE = { lived: '#d39b00', visited: '#6bb99a', notyet: '#2a2a2a' };
+  // Palette: visited = aqua, lived = dark blue, not-yet = black
+  var FILL =   { lived: '#355572', visited: '#a3cfd0', notyet: '#000000' };
+  var STROKE = { lived: '#273f55', visited: '#7a9b9c', notyet: '#2a2a2a' };
 
   function countryStyle(feature) {
     var iso = (feature.properties.ISO_A2 || feature.properties.iso_a2 || feature.properties.ISO2 || '').toLowerCase();
@@ -183,9 +191,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return {
       pane: 'countries-fill',
       fillColor: FILL[status],
-      fillOpacity: status === 'notyet' ? 0 : 0.45,
+      fillOpacity: status === 'notyet' ? 0.85 : 0.65,
       color: STROKE[status],
-      weight: status === 'notyet' ? 0.6 : 1,
+      weight: 1,
       opacity: 1
     };
   }
@@ -251,9 +259,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var markers = [];
   validCities.forEach(function (city) {
+    var _iso = normalizeIso(countryFromId(city.id));
+    var computedCountryStatus = statusForIso(_iso);
+    var pinStatus = (city.status === 'lived' || computedCountryStatus === 'lived') ? 'lived'
+                   : (computedCountryStatus === 'visited' ? 'visited' : 'notyet');
     // Custom circular pin (uses CSS to be visible)
     var icon = L.divIcon({
-      html: '<div class="city-pin city-pin--' + (city.status || 'visited') + '"></div>',
+      html: '<div class="city-pin city-pin--' + pinStatus + '"></div>',
       className: 'leaflet-div-icon city-pin-wrapper',
       iconSize: [18, 18],
       iconAnchor: [9, 9]
