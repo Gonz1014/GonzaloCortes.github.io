@@ -354,9 +354,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return {
       pane: 'countries-fill',
       fillColor: FILL[status],
-      fillOpacity: 0.65,
+      fillOpacity: 0.55,
       color: STROKE[status],
-      weight: 1,
+      weight: 0.5,
       opacity: 1
     };
   }
