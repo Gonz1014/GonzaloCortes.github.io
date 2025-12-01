@@ -145,6 +145,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var imageCache = new Map(); // key: original path, value: {status:'ok'|'error', url:string}
   var resolveUrl = function (path) {
     try {
+      // Fix case-sensitive hosting: repo stores images under "Cities" (capital C)
+      if (typeof path === 'string' && path.indexOf('assets/images/cities/') === 0) {
+        path = path.replace('assets/images/cities/', 'assets/images/Cities/');
+      }
       return new URL(path, window.location.href).href;
     } catch (e) {
       console.warn('Bad image path', path, e);
