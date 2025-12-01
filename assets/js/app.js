@@ -366,15 +366,19 @@ document.addEventListener('DOMContentLoaded', function () {
       hoverImg.style.background = useGradientBg ? 'linear-gradient(135deg, #c9d6ff, #8bacf7)' : 'none';
     };
 
+    // Reset handlers for each show
+    hoverImg.onload = function () {
+      hoverImg.style.background = 'none';
+    };
+    hoverImg.onerror = function (e) {
+      console.warn('City image failed to load:', targetSrc, e);
+      applyImage(defaultImg, true);
+    };
+
     if (targetSrc) {
-      var tester = new Image();
-      tester.onload = function () {
-        applyImage(targetSrc + '?v=1', false);
-      };
-      tester.onerror = function () {
-        applyImage(defaultImg, true);
-      };
-      tester.src = targetSrc + '?v=1';
+      var bust = 'v=' + Date.now();
+      var sep = targetSrc.indexOf('?') === -1 ? '?' : '&';
+      applyImage(targetSrc + sep + bust, false);
     } else {
       applyImage(defaultImg, true);
     }
