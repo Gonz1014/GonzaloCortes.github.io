@@ -346,9 +346,39 @@ document.addEventListener('DOMContentLoaded', function () {
         pane: 'countries-fill'
       }).addTo(map);
       countriesLayer.bringToBack();
+
+      // === Debug helpers so you can verify the layer actually loaded ===
+      try {
+        var featureCount = (geo && geo.features) ? geo.features.length : 0;
+        console.log('[Countries] Loaded:', featureCount, 'features');
+        // Expose for quick inspection in DevTools
+        window.__countriesGeo = geo;
+        window.__countriesLayer = countriesLayer;
+        window.__visitedCountries = visitedCountries;
+        window.__livedCountries = livedCountries;
+
+        // Helper to restyle after you tweak visited/lived sets in console
+        window.refreshCountries = function () {
+          if (window.__countriesLayer) {
+            window.__countriesLayer.setStyle(countryStyle);
+            window.__countriesLayer.bringToBack();
+            console.log('[Countries] Restyled.');
+          }
+        };
+        // Helper to force a country visible by ISO2, e.g. colorTest('es')
+        window.colorTest = function (iso2, kind) {
+          kind = kind || 'visited';
+          iso2 = (iso2 || '').toLowerCase();
+          if (kind === 'lived') livedCountries.add(iso2); else visitedCountriesManual.add(iso2);
+          window.refreshCountries();
+          console.log('[Countries] Forced', iso2, 'as', kind);
+        };
+      } catch (e) {
+        console.warn('[Countries] Debug helpers failed', e);
+      }
     })
     .catch(function (err) {
-      console.warn('Countries GeoJSON not found. Add assets/data/world-countries-simplified.geojson', err);
+      console.warn('Countries GeoJSON not found. Make sure the file exists at assets/data/world-countries-simplified.geojson', err);
     });
   // Fallback: if no valid cities, bail early
   if (!validCities.length) return;
