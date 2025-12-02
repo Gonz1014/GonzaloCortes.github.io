@@ -685,6 +685,52 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 
 /* Ensure Kimberly tiles are visible on hover (inherit global animation) */
 .page-experience .xp-card.xp-kimberly:hover .xp-mosaic .xp-tile { opacity: 1 !important; transform: translateY(0) !important; }
+
+/* =============================
+   PROJECTS PAGE (scoped styles)
+   Mirrors the experience card layout but keeps hover to a simple cover zoom.
+   ============================= */
+.page-projects .xp-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  isolation: isolate;
+  min-height: clamp(320px, 35vw, 450px);
+  background: transparent;
+}
+.page-projects .xp-card.uk-card-body { padding: 0 !important; }
+.page-projects .xp-card.uk-card,
+.page-projects .xp-card.uk-card-default { background-color: transparent !important; }
+.page-projects .xp-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--xp-img, linear-gradient(135deg, #1f2937 0%, #111827 100%));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+  transition: transform 450ms ease;
+  z-index: 0;
+}
+.page-projects .xp-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.55));
+  z-index: 1;
+  transition: opacity 250ms ease;
+}
+.page-projects .xp-card:hover::before { transform: scale(1.06); }
+.page-projects .xp-card:hover::after  { opacity: .4; }
+.page-projects .xp-card .xp-card-inner { position: relative; z-index: 2; color: #ffffff; }
+.page-projects .xp-card > a.uk-position-cover { z-index: 3; }
+/* Ensure any leftover mosaic markup stays hidden on projects */
+.page-projects .xp-mosaic { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .page-projects .xp-card::before,
+  .page-projects .xp-card::after { transition: none; }
+}
 /* === HERO INTRO: circular headshot with wrapped text =================== */
 .hero-intro {
   max-width: 1100px;
