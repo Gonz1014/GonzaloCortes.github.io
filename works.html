@@ -132,7 +132,7 @@
                                 <div class="uk-position-medium uk-position-top-left uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove">SMS Chatbot + Calendar Manager</h3>
                                 </div>
-                                <a class="uk-position-cover" href="single-project.html" aria-label="Open SMS Chatbot + Calendar Manager project"></a>
+                                <a class="uk-position-cover" href="#proj-chatbot-modal" aria-label="Open SMS Chatbot + Calendar Manager project" uk-toggle></a>
                             </article>
                         </div>
 
@@ -143,7 +143,7 @@
                                 <div class="uk-position-medium uk-position-top-right uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove uk-text-right">Scissor Jack Assembly</h3>
                                 </div>
-                                <a class="uk-position-cover" href="single-project.html" aria-label="Open Scissor Jack Assembly project"></a>
+                                <a class="uk-position-cover" href="#proj-scissor-modal" aria-label="Open Scissor Jack Assembly project" uk-toggle></a>
                             </article>
                         </div>
 
@@ -154,7 +154,7 @@
                                 <div class="uk-position-medium uk-position-top-left uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove">Java Blackjack &amp; Video Poker</h3>
                                 </div>
-                                <a class="uk-position-cover" href="single-project.html" aria-label="Open Java Blackjack and Video Poker project"></a>
+                                <a class="uk-position-cover" href="#proj-blackjack-modal" aria-label="Open Java Blackjack and Video Poker project" uk-toggle></a>
                             </article>
                         </div>
 
@@ -165,11 +165,158 @@
                                 <div class="uk-position-medium uk-position-top-right uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove uk-text-right">Mountain bike ground up build</h3>
                                 </div>
-                                <a class="uk-position-cover" href="single-project.html" aria-label="Open Mountain bike ground up build project"></a>
+                                <a class="uk-position-cover" href="#proj-bike-modal" aria-label="Open Mountain bike ground up build project" uk-toggle></a>
                             </article>
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <!-- Project modals: wide 2-column layout -->
+            <section aria-hidden="true">
+              <!-- SMS Chatbot + Calendar Manager -->
+              <div id="proj-chatbot-modal" class="uk-modal" data-uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-width-1-1 uk-width-3xlarge@m project-modal">
+                  <button class="uk-modal-close-default uk-close-large" type="button" data-uk-close></button>
+                  <div class="uk-grid uk-grid-large uk-child-width-1-2@m" data-uk-grid>
+                    <div>
+                      <div class="swiper project-media-swiper" data-project="chatbot">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide"><img src="assets/images/posts/post-01.jpg" alt="SMS chatbot dashboard"></div>
+                          <div class="swiper-slide"><img src="assets/images/posts/post-05.jpg" alt="Calendar manager view"></div>
+                          <div class="swiper-slide">
+                            <video controls muted playsinline loop poster="assets/images/posts/post-06.jpg">
+                              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                            </video>
+                          </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      </div>
+                    </div>
+                    <div class="project-modal-text uk-flex uk-flex-column uk-flex-between">
+                      <div>
+                        <h3 class="uk-h1">SMS Chatbot + Calendar Manager</h3>
+                        <p class="uk-text-meta uk-margin-small">AI + Ops Automation</p>
+                        <p>Built an SMS-driven assistant that classifies intents, updates a live calendar, and keeps schedulers in sync.</p>
+                        <ul class="uk-list uk-list-bullet">
+                          <li>Twilio SMS gateway, Flask backend, and Postgres audit trail.</li>
+                          <li>AI intent/entity extraction to route requests and prevent double bookings.</li>
+                          <li>Live sync to the web calendar with optimistic locking to avoid conflicts.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scissor Jack Assembly -->
+              <div id="proj-scissor-modal" class="uk-modal" data-uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-width-1-1 uk-width-3xlarge@m project-modal">
+                  <button class="uk-modal-close-default uk-close-large" type="button" data-uk-close></button>
+                  <div class="uk-grid uk-grid-large uk-child-width-1-2@m" data-uk-grid>
+                    <div>
+                      <div class="swiper project-media-swiper" data-project="scissor">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide"><img src="assets/images/posts/post-02.jpg" alt="Scissor jack assembly overview"></div>
+                          <div class="swiper-slide"><img src="assets/images/posts/post-07.jpg" alt="CAD of scissor jack"></div>
+                          <div class="swiper-slide">
+                            <video controls muted playsinline loop poster="assets/images/posts/post-08.jpg">
+                              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                            </video>
+                          </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      </div>
+                    </div>
+                    <div class="project-modal-text uk-flex uk-flex-column uk-flex-between">
+                      <div>
+                        <h3 class="uk-h1">Scissor Jack Assembly</h3>
+                        <p class="uk-text-meta uk-margin-small">Mechanical Systems</p>
+                        <p>Designed, fabricated, and tested a compact scissor jack with a focus on load paths and manufacturability.</p>
+                        <ul class="uk-list uk-list-bullet">
+                          <li>Modeled tolerances and fastener preload to hit lift targets.</li>
+                          <li>Built a repeatable assembly process and inspection checklist.</li>
+                          <li>Validated performance with strain, deflection, and lift time tests.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Java Blackjack & Video Poker -->
+              <div id="proj-blackjack-modal" class="uk-modal" data-uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-width-1-1 uk-width-3xlarge@m project-modal">
+                  <button class="uk-modal-close-default uk-close-large" type="button" data-uk-close></button>
+                  <div class="uk-grid uk-grid-large uk-child-width-1-2@m" data-uk-grid>
+                    <div>
+                      <div class="swiper project-media-swiper" data-project="blackjack">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide"><img src="assets/images/posts/post-03.jpg" alt="Java Blackjack UI"></div>
+                          <div class="swiper-slide"><img src="assets/images/posts/post-02.jpg" alt="Video Poker UI"></div>
+                          <div class="swiper-slide">
+                            <video controls muted playsinline loop poster="assets/images/posts/post-04.jpg">
+                              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                            </video>
+                          </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      </div>
+                    </div>
+                    <div class="project-modal-text uk-flex uk-flex-column uk-flex-between">
+                      <div>
+                        <h3 class="uk-h1">Java Blackjack &amp; Video Poker</h3>
+                        <p class="uk-text-meta uk-margin-small">Software Engineering</p>
+                        <p>Console and GUI games with robust rulesets, bankroll tracking, and probability-aware hints.</p>
+                        <ul class="uk-list uk-list-bullet">
+                          <li>Encapsulated game logic and deck state with clean OOP patterns.</li>
+                          <li>Implemented pay tables, split/double rules, and dealer AI.</li>
+                          <li>Added save/resume and analytics on win rates per strategy.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mountain bike ground up build -->
+              <div id="proj-bike-modal" class="uk-modal" data-uk-modal>
+                <div class="uk-modal-dialog uk-modal-body uk-width-1-1 uk-width-3xlarge@m project-modal">
+                  <button class="uk-modal-close-default uk-close-large" type="button" data-uk-close></button>
+                  <div class="uk-grid uk-grid-large uk-child-width-1-2@m" data-uk-grid>
+                    <div>
+                      <div class="swiper project-media-swiper" data-project="bike">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide"><img src="assets/images/posts/post-04.jpg" alt="Mountain bike build"></div>
+                          <div class="swiper-slide"><img src="assets/images/posts/post-01.jpg" alt="Component layout"></div>
+                          <div class="swiper-slide">
+                            <video controls muted playsinline loop poster="assets/images/posts/post-03.jpg">
+                              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                            </video>
+                          </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      </div>
+                    </div>
+                    <div class="project-modal-text uk-flex uk-flex-column uk-flex-between">
+                      <div>
+                        <h3 class="uk-h1">Mountain bike ground up build</h3>
+                        <p class="uk-text-meta uk-margin-small">Mechanical / Ride Quality</p>
+                        <p>Specced, assembled, and tuned a trail bike from a bare frame with an emphasis on fit and suspension kinematics.</p>
+                        <ul class="uk-list uk-list-bullet">
+                          <li>Frame geometry selection, drivetrain, brakes, and wheel build.</li>
+                          <li>Suspension sag, rebound, and compression tuning for varied terrain.</li>
+                          <li>Cabling, torque specs, and test loops to shake out creaks and play.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </section>
 
             <!-- Cta / Footer -->
@@ -228,5 +375,27 @@
         <script defer src="assets/js/helpers/typed-helper.js"></script>
         <script defer src="assets/js/helpers/anime-helper.js"></script>
         <script defer src="assets/js/helpers/anime-helper-defined-timelines.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            if (!document.body.classList.contains('page-projects') || typeof Swiper === 'undefined') return;
+
+            document.querySelectorAll('.project-media-swiper').forEach(function (el) {
+              var prev = el.querySelector('.swiper-button-prev');
+              var next = el.querySelector('.swiper-button-next');
+              var swiper = new Swiper(el, {
+                loop: true,
+                speed: 500,
+                autoplay: { delay: 5000, disableOnInteraction: false },
+                navigation: { nextEl: next, prevEl: prev }
+              });
+              swiper.on('slideChangeTransitionStart', function () {
+                el.querySelectorAll('video').forEach(function (vid) {
+                  vid.pause();
+                  try { vid.currentTime = 0; } catch (e) {}
+                });
+              });
+            });
+          });
+        </script>
     </body>
 </html>
