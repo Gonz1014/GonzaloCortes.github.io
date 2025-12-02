@@ -15,6 +15,8 @@ var cityData = [
   { id: "boston-us",               name: "Boston, USA",                  status: "visited", lat: 42.3601, lng: -71.0589, image: "assets/images/cities/boston-us.jpg",               caption: "" },
   { id: "philadelphia-us",         name: "Philadelphia, USA",            status: "visited", lat: 39.9526, lng: -75.1652, image: "assets/images/cities/philadelphia-us.jpg",         caption: "" },
   { id: "new-haven-us",            name: "New Haven, USA",               status: "visited", lat: 41.3083, lng: -72.9279, image: "assets/images/cities/new-haven-us.jpg",            caption: "" },
+  { id: "gainesville-us",          name: "Gainesville, USA",             status: "visited", lat: 29.6516, lng: -82.3248, image: "assets/images/cities/gainesville-us.jpg",          caption: "" },
+  { id: "sarasota-us",             name: "Sarasota, USA",                status: "visited", lat: 27.3364, lng: -82.5307, image: "assets/images/cities/sarasota-us.jpg",             caption: "" },
   { id: "hanover-us",              name: "Hanover, USA",                 status: "visited", lat: 43.7022, lng: -72.2895, image: "assets/images/cities/hanover-us.jpg",              caption: "" },
   { id: "san-diego-us",            name: "San Diego, USA",               status: "visited", lat: 32.7157, lng: -117.1611, image: "assets/images/cities/san-diego-us.jpg",           caption: "" },
   { id: "san-francisco-us",        name: "San Francisco, USA",           status: "visited", lat: 37.7749, lng: -122.4194, image: "assets/images/cities/san-francisco-us.jpg",       caption: "" },
@@ -35,6 +37,7 @@ var cityData = [
   { id: "puerto-vallarta-mx",      name: "Puerto Vallarta, Mexico",      status: "visited", lat: 20.6534, lng: -105.2253, image: "assets/images/cities/puerto-vallarta-mx.jpg",      caption: "" },
   { id: "valle-de-bravo-mx",       name: "Valle de Bravo, Mexico",       status: "visited", lat: 19.1950, lng: -100.1310, image: "assets/images/cities/valle-de-bravo-mx.jpg",       caption: "" },
   { id: "aguascalientes-mx",       name: "Aguascalientes, Mexico",       status: "visited", lat: 21.8853, lng: -102.2916, image: "assets/images/cities/aguascalientes-mx.jpg",      caption: "" },
+  { id: "acapulco-mx",             name: "Acapulco, Mexico",             status: "visited", lat: 16.8531, lng: -99.8237, image: "assets/images/cities/acapulco-mx.jpg",             caption: "" },
 
   // Australia
   { id: "sydney-au",               name: "Sydney, Australia",            status: "visited", lat: -33.8688, lng: 151.2093, image: "assets/images/cities/sydney-au.jpg",               caption: "" },
@@ -145,11 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var imageCache = new Map(); // key: original path, value: {status:'ok'|'error', url:string}
   var resolveUrl = function (path) {
     try {
-      // Fix case-sensitive hosting: repo stores images under "Cities" (capital C)
-      if (typeof path === 'string' && path.indexOf('assets/images/cities/') === 0) {
-        path = path.replace('assets/images/cities/', 'assets/images/Cities/');
-      }
-      return new URL(path, window.location.href).href;
+      return new URL(path, document.baseURI || window.location.href).href;
     } catch (e) {
       console.warn('Bad image path', path, e);
       return null;
@@ -313,11 +312,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (name && NAME_TO_A2[name]) return normalizeIso(NAME_TO_A2[name]);
     return null;
   }
-  // --- Country fills layer (GeoJSON) ---
-  // Create panes so country fills sit UNDER markers
-  map.createPane('countries-fill');
-  map.getPane('countries-fill').style.zIndex = 350;   // below markerPane (600)
-  map.getPane('countries-fill').style.pointerEvents = 'auto';
+  // --- Country fills layer (GeoJSON) — CHOROPLETH (FOOLPROOF) ---
+  // Ensure a pane above tiles but below markers/controls (idempotent)
+  if (!map.getPane('countries-fill')) {
+    const p = map.createPane('countries-fill');
+    p.style.zIndex = 350;            // tiles ~200, markers ~600
+    p.style.pointerEvents = 'auto';
+  }
 
   // Mark any countries you've LIVED in here (ISO-2 codes, lowercase)
   var livedCountries = new Set([
@@ -325,32 +326,23 @@ document.addEventListener('DOMContentLoaded', function () {
   ]);
 
   // Determine status for an ISO-2 code (normalized) using lived + visited + manual
+  // NOTE: returns null for "not yet" so we can FILTER them out entirely.
   function statusForIso(iso) {
     iso = normalizeIso(iso);
     if (!iso) return null;
     if (livedCountries.has(iso)) return 'lived';
     if (visitedCountries.has(iso) || visitedCountriesManual.has(iso)) return 'visited';
-    return null;
+    return null; // &lt;— hide not-yet countries
   }
 
   // Palette: visited = aqua, lived = dark blue
-  var FILL =   { lived: '#355572', visited: '#a3cfd0' };
+  var FILL   = { lived: '#355572', visited: '#a3cfd0' };
   var STROKE = { lived: '#273f55', visited: '#7a9b9c' };
 
   function countryStyle(feature) {
     var iso = isoFromFeature(feature.properties);
-    var status = statusForIso(iso);
-    if (!status) {
-      return {
-        pane: 'countries-fill',
-        fillColor: '#000000',
-        fillOpacity: 0,
-        color: 'transparent',
-        weight: 0,
-        opacity: 0,
-        interactive: false
-      };
-    }
+    var status = statusForIso(iso); // 'lived' | 'visited'
+    // By construction (filter below) status is never null here.
     return {
       pane: 'countries-fill',
       fillColor: FILL[status],
@@ -366,10 +358,13 @@ document.addEventListener('DOMContentLoaded', function () {
     layer.bindTooltip(name, { sticky: true });
     layer.on({
       mouseover: function (e) {
-        e.target.setStyle({ weight: 1.5, fillOpacity: Math.min((e.target.options.fillOpacity || 0.4) + 0.1, 0.75) });
+        e.target.setStyle({
+          weight: 1.5,
+          fillOpacity: Math.min((e.target.options.fillOpacity || 0.4) + 0.1, 0.75)
+        });
       },
       mouseout: function (e) {
-        countriesLayer.resetStyle(e.target);
+        if (window.__countriesLayer) window.__countriesLayer.resetStyle(e.target);
       },
       click: function (e) {
         map.fitBounds(e.target.getBounds(), { padding: [20, 20] });
@@ -377,40 +372,67 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  var countriesLayer = null;
-  fetch('assets/data/world-countries-simplified.geojson')
-    .then(function (r) { return r.json(); })
-    .then(function (geo) {
-      countriesLayer = L.geoJSON(geo, {
-        style: countryStyle,
-        onEachFeature: onEachCountry,
-        pane: 'countries-fill'
-      }).addTo(map);
-      countriesLayer.bringToBack();
+  // Resolve data URL safely (works from root or subfolders)
+  function resolveDataUrl(path) {
+    try { return new URL(path, document.baseURI).href; }
+    catch (e) { console.warn('Bad data path', path, e); return path; }
+  }
 
-      // === Debug helpers so you can verify the layer actually loaded ===
+  // Try relative and root-absolute paths (helps on GitHub Pages subpaths)
+  function fetchCountriesJson() {
+    var rel = 'assets/data/world-countries-simplified.geojson';
+    var try1 = resolveDataUrl(rel);
+    var try2 = rel.startsWith('/') ? rel : '/' + rel;
+    return fetch(try1).then(function (r) {
+      if (r.ok) return r.json();
+      return fetch(try2).then(function (r2) {
+        if (!r2.ok) throw new Error('Failed to load GeoJSON from ' + try1 + ' and ' + try2);
+        return r2.json();
+      });
+    });
+  }
+
+  var countriesLayer = null;
+
+  fetchCountriesJson()
+    .then(function (geo) {
+      // Draw ONLY visited/lived via filter (null = hide “not-yet”)
+      countriesLayer = L.geoJSON(geo, {
+        pane: 'countries-fill',
+        filter: function (f) {
+          var iso = isoFromFeature(f.properties);
+          return !!statusForIso(iso); // true only for visited/lived
+        },
+        style: countryStyle,
+        onEachFeature: onEachCountry
+      }).addTo(map);
+
+      if (countriesLayer.bringToBack) countriesLayer.bringToBack();
+
+      // Debug handles
       try {
         var featureCount = (geo && geo.features) ? geo.features.length : 0;
         console.log('[Countries] Loaded:', featureCount, 'features');
-        // Expose for quick inspection in DevTools
-        window.__countriesGeo = geo;
-        window.__countriesLayer = countriesLayer;
-        window.__visitedCountries = visitedCountries;
-        window.__livedCountries = livedCountries;
+        window.__countriesGeo      = geo;
+        window.__countriesLayer    = countriesLayer;
+        window.__visitedCountries  = visitedCountries;
+        window.__livedCountries    = livedCountries;
 
-        // Helper to restyle after you tweak visited/lived sets in console
+        // Restyle after changing sets (visited/lived) in console
         window.refreshCountries = function () {
           if (window.__countriesLayer) {
             window.__countriesLayer.setStyle(countryStyle);
-            window.__countriesLayer.bringToBack();
+            if (window.__countriesLayer.bringToBack) window.__countriesLayer.bringToBack();
             console.log('[Countries] Restyled.');
           }
         };
-        // Helper to force a country visible by ISO2, e.g. colorTest('es')
+
+        // Force a country by ISO2, e.g. colorTest('es') or colorTest('us','lived')
         window.colorTest = function (iso2, kind) {
+          iso2 = String(iso2 || '').toLowerCase();
           kind = kind || 'visited';
-          iso2 = (iso2 || '').toLowerCase();
-          if (kind === 'lived') livedCountries.add(iso2); else visitedCountriesManual.add(iso2);
+          if (kind === 'lived') { livedCountries.add(iso2); visitedCountries.delete(iso2); }
+          else { visitedCountries.add(iso2); }
           window.refreshCountries();
           console.log('[Countries] Forced', iso2, 'as', kind);
         };
@@ -419,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
     .catch(function (err) {
-      console.warn('Countries GeoJSON not found. Make sure the file exists at assets/data/world-countries-simplified.geojson', err);
+      console.warn('Countries GeoJSON failed to load via both paths.', err);
     });
   // Fallback: if no valid cities, bail early
   if (!validCities.length) return;
