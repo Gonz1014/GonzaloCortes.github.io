@@ -707,7 +707,8 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   position: absolute;
   inset: 0;
   background-image: var(--xp-img, linear-gradient(135deg, #1f2937 0%, #111827 100%));
-  background-size: cover;
+  background-color: var(--xp-img-bg, transparent);
+  background-size: var(--xp-img-size, cover);
   background-position: center;
   background-repeat: no-repeat;
   transform: scale(1.02);

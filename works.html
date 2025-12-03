@@ -150,7 +150,7 @@
                         <!-- Java Blackjack & Video Poker -->
                         <div>
                             <article class="uk-card uk-card-default uk-card-body uk-border-rounded uk-height-1-1 xp-card"
-                                     style="--xp-img: url('assets/images/posts/post-03.jpg');">
+                                     style="--xp-img: url('assets/images/projects/Java BlackJack & VideoPoker/Cover.png'); --xp-img-size: contain; --xp-img-bg: #ffffff;">
                                 <div class="uk-position-medium uk-position-top-left uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove">Java Blackjack &amp; Video Poker</h3>
                                 </div>
@@ -251,13 +251,19 @@
                     <div>
                       <div class="swiper project-media-swiper" data-project="blackjack">
                         <div class="swiper-wrapper">
-                          <div class="swiper-slide"><img src="assets/images/posts/post-03.jpg" alt="Java Blackjack UI"></div>
-                          <div class="swiper-slide"><img src="assets/images/posts/post-02.jpg" alt="Video Poker UI"></div>
+                          <div class="swiper-slide"><img src="assets/images/projects/Java BlackJack & VideoPoker/JavaFXHome.png" alt="Java Blackjack and Video Poker home screen"></div>
                           <div class="swiper-slide">
-                            <video controls muted playsinline loop poster="assets/images/posts/post-04.jpg">
-                              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+                            <video controls muted playsinline data-playback-rate="1.66">
+                              <source src="assets/images/projects/Java BlackJack & VideoPoker/BlackJackGameplay.mov" type="video/quicktime">
                             </video>
                           </div>
+                          <div class="swiper-slide">
+                            <video controls muted playsinline data-playback-rate="2">
+                              <source src="assets/images/projects/Java BlackJack & VideoPoker/VideoPokerGameplay.mov" type="video/quicktime">
+                            </video>
+                          </div>
+                          <div class="swiper-slide"><img src="assets/images/projects/Java BlackJack & VideoPoker/BlackJackTerminalGP.png" alt="Java Blackjack terminal gameplay"></div>
+                          <div class="swiper-slide"><img src="assets/images/projects/Java BlackJack & VideoPoker/VideoPokerTerminalGP.png" alt="Java Video Poker terminal gameplay"></div>
                         </div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
@@ -379,18 +385,70 @@
             document.querySelectorAll('.project-media-swiper').forEach(function (el) {
               var prev = el.querySelector('.swiper-button-prev');
               var next = el.querySelector('.swiper-button-next');
+              var isBlackjack = el.dataset.project === 'blackjack';
               var swiper = new Swiper(el, {
                 loop: true,
                 speed: 500,
-                autoplay: { delay: 5000, disableOnInteraction: false },
+                autoplay: isBlackjack ? false : { delay: 5000, disableOnInteraction: false },
                 navigation: { nextEl: next, prevEl: prev }
               });
-              swiper.on('slideChangeTransitionStart', function () {
+
+              var slideTimer = null;
+              var clearTimer = function () {
+                if (slideTimer) {
+                  clearTimeout(slideTimer);
+                  slideTimer = null;
+                }
+              };
+              var resetVideos = function () {
                 el.querySelectorAll('video').forEach(function (vid) {
                   vid.pause();
+                  vid.onended = null;
                   try { vid.currentTime = 0; } catch (e) {}
                 });
-              });
+              };
+              var scheduleNext = function (delay) {
+                clearTimer();
+                slideTimer = setTimeout(function () {
+                  swiper.slideNext();
+                }, delay);
+              };
+              var handleActiveMedia = function () {
+                if (!isBlackjack) return;
+
+                clearTimer();
+                resetVideos();
+
+                var activeSlide = swiper.slides[swiper.activeIndex];
+                if (!activeSlide) return;
+
+                var video = activeSlide.querySelector('video');
+                if (video) {
+                  video.muted = true;
+                  var rate = parseFloat(video.dataset.playbackRate || '1');
+                  if (!isNaN(rate)) { video.playbackRate = rate; }
+
+                  video.onended = function () {
+                    video.onended = null;
+                    swiper.slideNext();
+                  };
+
+                  var playPromise = video.play();
+                  if (playPromise && typeof playPromise.then === 'function') {
+                    playPromise.catch(function () { scheduleNext(5000); });
+                  }
+                } else {
+                  scheduleNext(5000);
+                }
+              };
+
+              if (isBlackjack) {
+                swiper.on('slideChangeTransitionStart', resetVideos);
+                swiper.on('slideChangeTransitionEnd', handleActiveMedia);
+                handleActiveMedia();
+              } else {
+                swiper.on('slideChangeTransitionStart', resetVideos);
+              }
             });
           });
         </script>
