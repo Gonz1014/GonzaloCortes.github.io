@@ -737,6 +737,16 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 .page-projects .xp-card:hover::before { transform: scale(1.06); }
 .page-projects .xp-card:hover::after  { opacity: .4; }
 .page-projects .xp-card .xp-card-inner { position: relative; z-index: 3; color: #ffffff; }
+.page-projects .xp-card .xp-card-inner {
+  padding: 10px 14px;
+  margin: 12px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  border-radius: 12px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .page-projects .xp-card > a.uk-position-cover { z-index: 4; }
 /* Ensure any leftover mosaic markup stays hidden on projects */
 .page-projects .xp-mosaic { display: none !important; }
