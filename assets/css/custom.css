@@ -748,8 +748,8 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  aspect-ratio: 1 / 1;
-  max-height: clamp(360px, 62vw, 860px);
+  aspect-ratio: 5 / 4;
+  max-height: clamp(420px, 70vw, 920px);
 }
 .page-projects .project-modal .swiper-slide {
   display: flex;
