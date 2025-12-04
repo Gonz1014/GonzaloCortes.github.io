@@ -698,10 +698,16 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   min-height: clamp(280px, 32vw, 400px);
   aspect-ratio: 1 / 1;
   background: var(--xp-img-bg, transparent);
+}
+.page-projects .xp-card .xp-card-cover {
+  position: absolute;
+  inset: 0;
   background-image: var(--xp-img, none);
   background-size: var(--xp-img-size, cover);
   background-position: center;
   background-repeat: no-repeat;
+  background-color: var(--xp-img-bg, transparent);
+  z-index: 0;
 }
 .page-projects .xp-card.uk-card-body { padding: 0 !important; }
 .page-projects .xp-card.uk-card,
@@ -710,27 +716,23 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: var(--xp-img, linear-gradient(135deg, #1f2937 0%, #111827 100%));
-  background-color: var(--xp-img-bg, transparent);
-  background-size: var(--xp-img-size, cover);
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.52));
   transform: scale(1.02);
   transition: transform 450ms ease;
-  z-index: 0;
+  z-index: 1;
 }
 .page-projects .xp-card::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.55));
-  z-index: 1;
+  z-index: 2;
   transition: opacity 250ms ease;
 }
 .page-projects .xp-card:hover::before { transform: scale(1.06); }
 .page-projects .xp-card:hover::after  { opacity: .4; }
-.page-projects .xp-card .xp-card-inner { position: relative; z-index: 2; color: #ffffff; }
-.page-projects .xp-card > a.uk-position-cover { z-index: 3; }
+.page-projects .xp-card .xp-card-inner { position: relative; z-index: 3; color: #ffffff; }
+.page-projects .xp-card > a.uk-position-cover { z-index: 4; }
 /* Ensure any leftover mosaic markup stays hidden on projects */
 .page-projects .xp-mosaic { display: none !important; }
 /* Keep project images/videos in full color */
