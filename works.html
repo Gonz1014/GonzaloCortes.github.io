@@ -419,6 +419,13 @@
                   slideTimer = null;
                 }
               };
+              var imageTimer = null;
+              var clearImageTimer = function () {
+                if (imageTimer) {
+                  clearTimeout(imageTimer);
+                  imageTimer = null;
+                }
+              };
               var scheduleNext = function (delay) {
                 clearTimer();
                 slideTimer = setTimeout(function () {
@@ -426,6 +433,7 @@
                 }, delay);
               };
               var resetVideos = function () {
+                clearImageTimer();
                 el.querySelectorAll('video').forEach(function (vid) {
                   vid.pause();
                   vid.onended = null;
@@ -455,7 +463,10 @@
                     playPromise.catch(function () { scheduleNext(5000); });
                   }
                 } else {
-                  scheduleNext(5000);
+                  clearImageTimer();
+                  imageTimer = setTimeout(function () {
+                    swiper.slideNext();
+                  }, 5000);
                 }
               };
 
