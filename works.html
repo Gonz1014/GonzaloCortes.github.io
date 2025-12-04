@@ -129,7 +129,6 @@
                         <div>
                             <article class="uk-card uk-card-default uk-card-body uk-border-rounded uk-height-1-1 xp-card"
                                      style="--xp-img: url('./assets/images/posts/post-01.jpg'); --xp-img-size: cover; --xp-img-bg: transparent;">
-                                <div class="xp-card-cover" aria-hidden="true"></div>
                                 <div class="uk-position-medium uk-position-top-left uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove">Chromie: SMS Scheduling Assistant</h3>
                                 </div>
@@ -141,7 +140,6 @@
                         <div>
                             <article class="uk-card uk-card-default uk-card-body uk-border-rounded uk-height-1-1 xp-card"
                                      style="--xp-img: url('./assets/images/projects/CarJack/CarJackCover.png'); --xp-img-size: contain; --xp-img-bg: #ffffff;">
-                                <div class="xp-card-cover" aria-hidden="true"></div>
                                 <div class="uk-position-medium uk-position-top-right uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove uk-text-right">CarJack: CAD &amp; Assembly</h3>
                                 </div>
@@ -153,7 +151,6 @@
                         <div>
                             <article class="uk-card uk-card-default uk-card-body uk-border-rounded uk-height-1-1 xp-card"
                                      style="--xp-img: url('./assets/images/projects/Java%20BlackJack%20%26%20VideoPoker/Cover.png'); --xp-img-size: contain; --xp-img-bg: #ffffff;">
-                                <div class="xp-card-cover" aria-hidden="true"></div>
                                 <div class="uk-position-medium uk-position-top-left uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove">Blackjack &amp; Video Poker (Java/JavaFX)</h3>
                                 </div>
@@ -165,7 +162,6 @@
                         <div>
                             <article class="uk-card uk-card-default uk-card-body uk-border-rounded uk-height-1-1 xp-card"
                                      style="--xp-img: url('./assets/images/projects/MountainBike/MountainBikeCover.jpg'); --xp-img-size: contain; --xp-img-bg: #ffffff;">
-                                <div class="xp-card-cover" aria-hidden="true"></div>
                                 <div class="uk-position-medium uk-position-top-right uk-text-white uk-text-bold xp-card-inner">
                                     <h3 class="uk-h2 uk-margin-remove uk-text-right">Custom Mountain Bike: Frame-Up Build</h3>
                                 </div>
@@ -488,6 +484,33 @@
               if (modal) {
                 modal.addEventListener('shown', handleActiveMedia);
                 modal.addEventListener('hidden', clearAllTimers);
+              }
+            });
+          });
+        </script>
+        <script>
+          // Normalize --xp-img to an absolute URL and add a graceful fallback, mirroring experience.html behavior
+          document.addEventListener('DOMContentLoaded', function () {
+            if (!document.body.classList.contains('page-projects')) return;
+
+            function extractUrlFromVar(styleStr) {
+              var m = styleStr && styleStr.match(/url\(['"]?([^'"]+)['"]?\)/i);
+              return m ? m[1] : null;
+            }
+
+            document.querySelectorAll('.xp-card').forEach(function(card) {
+              var styleAttr = card.getAttribute('style') || '';
+              var coverUrl = extractUrlFromVar(styleAttr);
+
+              if (coverUrl) {
+                try {
+                  var resolvedCover = (new URL(coverUrl, window.location.href)).href;
+                  card.style.setProperty('--xp-img', "url('" + resolvedCover + "')");
+                } catch (e) {
+                  // leave as-is if URL resolution fails
+                }
+              } else {
+                card.classList.add('xp-noimg');
               }
             });
           });
