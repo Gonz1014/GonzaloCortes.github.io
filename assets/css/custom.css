@@ -272,6 +272,14 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   width: 72px;
   height: 72px;
   display: block;
+  filter: brightness(0);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+.contact-links.contact-links--secondary a:hover img { opacity: 0.7; }
+.dark .contact-links.contact-links--secondary img,
+html.dark .contact-links.contact-links--secondary img,
+html.uk-dark .contact-links.contact-links--secondary img {
+  filter: invert(1);
 }
 @media (max-width: 640px) {
   .contact-links.contact-links--secondary img {
