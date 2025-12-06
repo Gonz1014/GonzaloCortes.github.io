@@ -198,7 +198,7 @@
                           </div>
                           <div class="swiper-slide media-bg-white"><img src="assets/images/projects/ChromieSwap/ManagerApproval.png" alt="Manager approval view"></div>
                           <div class="swiper-slide media-bg-white"><img src="assets/images/projects/ChromieSwap/SwapHistory.png" alt="Swap history view"></div>
-                          <div class="swiper-slide media-bg-white"><img src="assets/images/projects/ChromieSwap/Calendar%20schedule.png" alt="Calendar schedule view"></div>
+                          <div class="swiper-slide media-bg-white"><img src="assets/images/projects/ChromieSwap/SwapEmailinv.png" alt="Swap email invitation view"></div>
                         </div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
@@ -208,11 +208,10 @@
                       <div>
                         <h3 class="uk-h1">Chromie: SMS Scheduling Assistant</h3>
                         <p class="uk-text-meta uk-margin-small">Twilio with Flask with Calendar Manager</p>
-                        <p>Built an SMS-driven assistant that classifies intents, updates a live calendar, and keeps schedulers in sync.</p>
+                        <p>Hospitals were drowning in coverage gaps and group texts. At my time in Chromie, I built an SMS-driven swap system that lets staff fill openings in minutes with no app to download, while managers keep full oversight and every action is time-stamped and auditable.</p>
                         <ul class="uk-list uk-list-bullet">
-                          <li>Twilio SMS gateway, Flask backend, and Postgres audit trail.</li>
-                          <li>AI intent/entity extraction to route requests and prevent double bookings.</li>
-                          <li>Live sync to the web calendar with optimistic locking to avoid conflicts.</li>
+                          <li>The website had a very simple structure. Upload a monthly CSV, see shifts on a calendar, tap a date to reach the right people, and staff reply in natural language to claim or offer. I fine-tuned a compact model to understand messy replies (names, dates, claim vs offer vs cancel) and fall back to guided prompts when uncertain. Managers can approve by SMS or on the website. Deployed on Render with a Flask API, PostgreSQL as the source of truth, and Twilio for messaging. Email invites onboard managers securely. The program is multi-tenant, with strict row-level scoping so multiple organizations run side-by-side without any data leakage.</li>
+                          <li>The hard part came from keeping web, SMS, and database perfectly in sync and eliminating double claims. I designed a clear state machine for offers and approvals, used idempotent tokens and transactional writes, verified webhooks, and timezone-aware timestamps. Resulted in fast swaps, clean audit history, and reliable operations across many teams.</li>
                         </ul>
                       </div>
                     </div>
