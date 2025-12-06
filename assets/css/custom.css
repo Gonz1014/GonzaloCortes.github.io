@@ -160,6 +160,14 @@ html.uk-dark .site-logo {
   margin: 12px auto !important;
   border-radius: 2px;
 }
+.contact-rule--secondary {
+  width: 120px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.8;
+  margin: 24px auto 0 !important;
+  border-radius: 1px;
+}
 .uni-studio-footer #contact p.uk-text-large {
   margin-bottom: 10px !important;
 }
@@ -266,26 +274,8 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 
 /* Extra contact icons row (resume + GitHub) */
 .contact-links.contact-links--secondary {
-  gap: 48px;
-}
-.contact-links.contact-links--secondary img {
-  width: 72px;
-  height: 72px;
-  display: block;
-  filter: brightness(0);
-  transition: opacity 0.2s ease, filter 0.2s ease;
-}
-.contact-links.contact-links--secondary a:hover img { opacity: 0.7; }
-.dark .contact-links.contact-links--secondary img,
-html.dark .contact-links.contact-links--secondary img,
-html.uk-dark .contact-links.contact-links--secondary img {
-  filter: invert(1);
-}
-@media (max-width: 640px) {
-  .contact-links.contact-links--secondary img {
-    width: 56px;
-    height: 56px;
-  }
+  gap: 32px;
+  margin-top: 28px;
 }
 
 /* ---------- OVERRIDES: BIGGER ICONS + FILLED LINKEDIN ---------- */
