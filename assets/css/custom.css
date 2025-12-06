@@ -735,8 +735,11 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
   z-index: 2;
   transition: opacity 250ms ease;
 }
-.page-projects .xp-card:hover::before { transform: scale(1.06); }
-.page-projects .xp-card:hover::after  { opacity: .4; }
+.page-projects .xp-card:hover::before {
+  transform: scale(1.06);
+  filter: saturate(1.35) contrast(1.08) brightness(1.06);
+}
+.page-projects .xp-card:hover::after  { opacity: .12; }
 .page-projects .xp-card .xp-card-inner { position: relative; z-index: 3; color: #ffffff; }
 .page-projects .xp-card .xp-card-inner {
   padding: 10px 14px;
