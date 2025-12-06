@@ -905,4 +905,6 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 
 /* Prevent light/dark theme from altering outlines — we show only glyphs */
 .uni-studio-footer .contact-links .uk-icon svg,
-.uni-studio-footer .cont
+.uni-studio-footer .contact-links [data-uk-icon] svg {
+  outline: none !important;
+}
