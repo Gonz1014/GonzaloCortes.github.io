@@ -124,7 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var map = L.map('world-map', {
     worldCopyJump: true,
     zoomControl: true
-  }).setView([20, 0], 2); // [lat, lng], zoom
+  });
+
+  // Start zoomed out to see the full world (Alaska to New Zealand)
+  map.fitBounds([[-60, -180], [80, 180]]);
 
   // Add Carto Dark Matter tiles for dark basemap
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
