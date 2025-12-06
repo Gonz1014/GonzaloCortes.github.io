@@ -37,6 +37,7 @@ var cityData = [
   { id: "puerto-vallarta-mx",      name: "Puerto Vallarta, Mexico",      status: "visited", lat: 20.6534, lng: -105.2253, image: "assets/images/cities/puerto-vallarta-mx.jpg",      caption: "" },
   { id: "valle-de-bravo-mx",       name: "Valle de Bravo, Mexico",       status: "visited", lat: 19.1950, lng: -100.1310, image: "assets/images/cities/valle-de-bravo-mx.jpg",       caption: "" },
   { id: "aguascalientes-mx",       name: "Aguascalientes, Mexico",       status: "visited", lat: 21.8853, lng: -102.2916, image: "assets/images/cities/aguascalientes-mx.jpg",      caption: "" },
+  { id: "ixtapa-mx",               name: "Ixtapa, Mexico",               status: "visited", lat: 17.6649, lng: -101.6097, image: "assets/images/cities/ixtapa-mx.jpg",              caption: "" },
   { id: "acapulco-mx",             name: "Acapulco, Mexico",             status: "visited", lat: 16.8531, lng: -99.8237, image: "assets/images/cities/acapulco-mx.jpg",             caption: "" },
 
   // Australia
@@ -154,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
     'pisa-it.jpg',
     'tashkurgan-cn.jpg',
     'toronto-ca.jpg',
-    'varese-it.jpg'
+    'varese-it.jpg',
+    'ixtapa-mx.jpg'
   ]);
   var fallbackCityImage = 'assets/images/cities/barcelona-es.jpg';
   validCities.forEach(function (c) {
