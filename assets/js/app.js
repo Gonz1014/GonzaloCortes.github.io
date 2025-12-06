@@ -144,6 +144,29 @@ document.addEventListener('DOMContentLoaded', function () {
   var validCities = cityData.filter(function (c) {
     return typeof c.lat === 'number' && typeof c.lng === 'number';
   });
+  // Map any missing image files to a known fallback to avoid 404 spam in preload
+  var availableCityImages = new Set([
+    'barcelona-es.jpg',
+    'civitavecchia-it.jpg',
+    'marseille-fr.jpg',
+    'naples-it.jpg',
+    'palermo-it.jpg',
+    'pisa-it.jpg',
+    'tashkurgan-cn.jpg',
+    'toronto-ca.jpg',
+    'varese-it.jpg'
+  ]);
+  var fallbackCityImage = 'assets/images/cities/barcelona-es.jpg';
+  validCities.forEach(function (c) {
+    if (!c.image) {
+      c.image = fallbackCityImage;
+      return;
+    }
+    var name = c.image.split('/').pop();
+    if (!availableCityImages.has(name)) {
+      c.image = fallbackCityImage;
+    }
+  });
   // Preload images and track success/failure
   var imageCache = new Map(); // key: original path, value: {status:'ok'|'error', url:string}
   var resolveUrl = function (path) {
