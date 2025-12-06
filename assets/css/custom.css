@@ -834,17 +834,25 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 .dark .page-projects .project-modal .swiper-button-next { color: #fff; }
 .page-projects .project-modal .project-modal-text {
   padding: clamp(12px, 2vw, 20px);
-  color: #ffffff;
+  color: #0c0c0f;
   gap: 12px;
 }
 .page-projects .project-modal .project-modal-text p,
-.page-projects .project-modal .project-modal-text li { color: #e6e9f2; }
-.dark .page-projects .project-modal .project-modal-text { color: #ffffff; }
+.page-projects .project-modal .project-modal-text li { color: #3b4355; }
+.dark .page-projects .project-modal .project-modal-text,
+html.dark .page-projects .project-modal .project-modal-text,
+html.uk-dark .page-projects .project-modal .project-modal-text { color: #ffffff; }
 .dark .page-projects .project-modal .project-modal-text p,
-.dark .page-projects .project-modal .project-modal-text li { color: #e6e9f2; }
+.dark .page-projects .project-modal .project-modal-text li,
+html.dark .page-projects .project-modal .project-modal-text p,
+html.dark .page-projects .project-modal .project-modal-text li,
+html.uk-dark .page-projects .project-modal .project-modal-text p,
+html.uk-dark .page-projects .project-modal .project-modal-text li { color: #e6e9f2; }
 .page-projects .project-modal h3 { color: inherit; }
-.page-projects .project-modal .uk-text-meta { color: #d6d9e4; }
-.dark .page-projects .project-modal .uk-text-meta { color: #d6d9e4; }
+.page-projects .project-modal .uk-text-meta { color: #5a6270; }
+.dark .page-projects .project-modal .uk-text-meta,
+html.dark .page-projects .project-modal .uk-text-meta,
+html.uk-dark .page-projects .project-modal .uk-text-meta { color: #d6d9e4; }
 .page-projects .project-modal .uk-modal-close-default {
   color: inherit;
   top: 14px;
