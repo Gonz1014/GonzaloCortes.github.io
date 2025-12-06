@@ -280,6 +280,20 @@ html.uk-dark .uni-studio-footer .footer-bottom-rule {
 .contact-links.contact-links--secondary a {
   color: inherit !important;
 }
+.contact-links.contact-links--secondary .resume-icon-img {
+  width: var(--contact-icon-size);
+  height: var(--contact-icon-size);
+  object-fit: contain;
+  display: block;
+  filter: invert(0);
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+.dark .contact-links.contact-links--secondary .resume-icon-img,
+html.dark .contact-links.contact-links--secondary .resume-icon-img,
+html.uk-dark .contact-links.contact-links--secondary .resume-icon-img {
+  filter: invert(1);
+}
+.contact-links.contact-links--secondary a:hover .resume-icon-img { opacity: 0.72; }
 
 /* ---------- OVERRIDES: BIGGER ICONS + FILLED LINKEDIN ---------- */
 
