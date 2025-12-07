@@ -39,6 +39,7 @@ var cityData = [
   { id: "aguascalientes-mx",       name: "Aguascalientes, Mexico",       status: "visited", lat: 21.8853, lng: -102.2916, image: "assets/images/cities/aguascalientes-mx.jpg",      caption: "" },
   { id: "ixtapa-mx",               name: "Ixtapa, Mexico",               status: "visited", lat: 17.6649, lng: -101.6097, image: "assets/images/cities/ixtapa-mx.jpg",              caption: "" },
   { id: "acapulco-mx",             name: "Acapulco, Mexico",             status: "visited", lat: 16.8531, lng: -99.8237, image: "assets/images/cities/acapulco-mx.jpg",             caption: "" },
+  { id: "texcoco-mx",              name: "Texcoco, Mexico",              status: "visited", lat: 19.5134, lng: -98.8826, image: "assets/images/cities/texcoco-mx.jpg",              caption: "" },
   { id: "san-miguel-mx",           name: "San Miguel de Allende, Mexico",status: "visited", lat: 20.9140, lng: -100.7438, image: "assets/images/cities/san-miguel-mx.jpg",           caption: "" },
 
   // Australia
@@ -515,7 +516,11 @@ document.addEventListener('DOMContentLoaded', function () {
       iconSize: [18, 18],
       iconAnchor: [9, 9]
     });
-    var marker = L.marker([city.lat, city.lng], { icon: icon, zIndexOffset: 500, title: city.name }).addTo(map);
+    var marker = L.marker([city.lat, city.lng], {
+      icon: icon,
+      zIndexOffset: pinStatus === 'lived' ? 2000 : 500,
+      title: city.name
+    }).addTo(map);
 
     var pinEl = marker.getElement() ? marker.getElement().querySelector('.city-pin') : null;
 
